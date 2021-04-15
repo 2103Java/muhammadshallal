@@ -1,1 +1,11 @@
-/.metadata/
+.metadata/
+ERS/target/
+ERS/pom.xml.tag
+ERS/pom.xml.releaseBackup
+ERS/pom.xml.versionsBackup
+ERS/pom.xml.next
+ERS/release.properties
+ERS/dependency-reduced-pom.xml
+ERS/buildNumber.properties
+ERS/.mvn/timing.properties
+ERS/.mvn/wrapper/maven-wrapper.war
