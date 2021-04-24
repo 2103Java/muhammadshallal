@@ -21,4 +21,15 @@
   	<url-pattern>/auth</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>EmpCountServlet</servlet-name>
+  	<servlet-class>com.revature.request.EmployeeCountServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>EmpCountServlet</servlet-name>
+  	<url-pattern>/get/employee/count</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

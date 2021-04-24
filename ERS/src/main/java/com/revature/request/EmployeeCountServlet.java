@@ -8,19 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.revature.model.Employee;
+import com.revature.controller.EmployeeController;
+import com.revature.controller.EmployeeControllerImpl;
 
-public class DispatcherServlet extends HttpServlet {
+public class EmployeeCountServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession httpSession = req.getSession(false);
 		if (httpSession != null) {
-			if (((Employee) httpSession.getAttribute("employee")).isManager())
-				resp.sendRedirect("mdash.html");
-			else resp.sendRedirect("edash.html");
+			EmployeeController employeeController = new EmployeeControllerImpl();
+			resp.setContentType("text/html");
+			resp.setCharacterEncoding("UTF-8");
+			resp.getWriter().write(employeeController.getEmployeeCount());
 		}
-		else resp.sendRedirect("login.html");
+		else resp.sendError(401);
 	}
+	
+	
+	
 }

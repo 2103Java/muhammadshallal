@@ -157,3 +157,8 @@ a.article:hover {
 #content.active {
     width: 100%;
 }
+
+.count {
+    text-align: right;
+    font-size: 100px;
+}
