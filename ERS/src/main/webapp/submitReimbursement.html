@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+	<meta charset="ISO-8859-1">
+	<title>Submit a reimbursement request</title>
+	</head>
+	<body>
+		<form action="/ERS/submitReimbursementServlet" method="post" name="submissionForm" enctype = "multipart/form-data">
+			
+			<br>
+			<br>
+			<label for="username">Your account username</label>
+			<input type="email" name="username" required/>
+			
+			<br>
+			<br>
+			<label for="Amount">Reimbursement Amount in $</label>
+			<input type="number" step="0.01" name="Amount" required/>
+			
+			<br>
+			<br>
+			<p>Specify one category:</p>
+			<label for="Travel">Travel</label>
+			<input type="radio" name="Category" value="Travel">
+			<label for="Lodging">Lodging</label>
+			<input type="radio" name="Category" value="Lodging">
+			<label for="Food">Food</label>
+			<input type="radio" name="Category" value="Food">
+			<label for="Other">Other</label>
+			<input type="radio" name="Category" value="Other">
+			
+			<br>
+			<br>
+			<p>Please provide a brief description of why this is a business expense.</p>
+			<textarea rows="5" cols="50" name="Description" id="Description"></textarea>
+			
+			<br>
+			<br>
+			<label for="fileselect">Upload a receipt image</label>
+			<input type="file" name="fileselect" required/>
+			
+			<br>
+			<br>
+			<input type="submit" value="Submit">
+		</form>
+	</body>
+	</html>

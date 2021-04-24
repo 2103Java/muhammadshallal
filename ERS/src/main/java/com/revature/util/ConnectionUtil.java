@@ -4,13 +4,29 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 public final class ConnectionUtil {
-	private static final String DB_URL = "jdbc:postgresql://ers.csdlvyc8g6b3.us-west-2.rds.amazonaws.com/ers";
-	private static final String USER = "postgres";
-	private static final String PASS = "password123";
+
+
+	private static final String URL = System.getenv("ers_url");
+	private static final String USERNAME = System.getenv("ers_username");
+	private static final String PASSWORD = System.getenv("ers_password");
+	
+	private static Connection connection = null;
 	
 	public static Connection getConnection() throws SQLException, ClassNotFoundException {
-		Class.forName("org.postgresql.Driver");
-		return DriverManager.getConnection(DB_URL,USER,PASS);
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Issues with establishing a connection.");
+			e.printStackTrace();
+		} 
+		return connection;
 	}
+	
+	
 }

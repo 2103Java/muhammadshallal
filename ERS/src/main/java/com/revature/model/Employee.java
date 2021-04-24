@@ -2,19 +2,27 @@ package com.revature.model;
 
 public class Employee {
 	
-	private long id;
+	private long id; //what is the value of this id?
 	private String firstName;
 	private String lastName;
-	private String ssn;
+	private String ssn; //This information is not supposed to be provided in a registration process
 	private String address;
 	private boolean manager;
 	private String phoneNumber;
-	private String email;
-	private String password;
+	private String email; //is primary key?
+	private String password; //hashed?
 	
 	public Employee() {
 		// TODO Auto-generated constructor stub
 		super();
+	}
+	
+	public Employee(String firstName, String lastName, String username, String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = username;
+		this.password = password;
 	}
 	
 	public Employee(long id, String firstName, String lastName, String ssn, String address, boolean manager,

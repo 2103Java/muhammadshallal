@@ -14,16 +14,19 @@ import com.revature.controller.EmployeeControllerImpl;
 public class EmployeeCountServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession httpSession = req.getSession(false);
+		
+		//Pass request to controller
+		HttpSession httpSession = request.getSession(false);
 		if (httpSession != null) {
-			EmployeeController employeeController = new EmployeeControllerImpl();
-			resp.setContentType("text/html");
-			resp.setCharacterEncoding("UTF-8");
-			resp.getWriter().write(employeeController.getEmployeeCount());
+			Object data = RequestHelper.process(request);
+			//EmployeeController employeeController = new EmployeeControllerImpl();
+			response.setContentType("text/html");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write((Integer) data);
 		}
-		else resp.sendError(401);
+		else response.sendError(401);
 	}
 	
 	

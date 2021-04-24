@@ -1,7 +1,25 @@
 package com.revature.service;
 
-public interface EmployeeService {
+import java.util.List;
 
-	int getEmployeeCount();
+import com.revature.model.*;
+
+public interface EmployeeService {
+	
+	public boolean registerEmployee(Employee employee);
+	public boolean unregisterEmployee(String username);
+	
+	public boolean employeeExists(String username);
+	public int getEmployeeCount();
+	public List<Employee> listEmployees();
+	
+	public boolean login(String username, String password);
+	public boolean logout(String username, String password);
+	
+	
+	public boolean submitReimbursment(Reimbursment reimbursment);
+	public List<Reimbursment> showMyPreviousReimbursments(String username);
+	
+	
 	
 }
