@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Register a new account</title>
+		<script>  
+			function manage(txt) {
+		    	var pass1 = document.getElementById('pass1');
+		        var pass2 = document.getElementById('pass2');
+		        var bt = document.getElementById('register');
+		        if (pass1.value != pass2.value) {
+		            bt.disabled = true;
+		        }
+		        else {
+		            bt.disabled = false;
+		        }
+		    }    
+		</script>  
+	</head>
+	<body>
+		<form action="/ERS/RegisterServlet" method="post" name="registrationForm">
+			
+			<br>
+			<br>
+			<label for="firstname">Please enter your first name</label>
+			<input type="text" name="firstname" required/>
+			
+			<br>
+			<br>
+			<label for="lastname">Please enter your last name</label>
+			<input type="text" name="lastname" required/>
+			
+			<br>
+			<br>
+			<label for="email">Please enter a valid email</label>
+			<input type="email" name="email" required/>
+
+			<br>
+			<br>
+			<label for="password">Please enter a password</label>
+			<input type="password" name="password" id="pass1" required/>
+
+			<br>
+			<br>
+			<label for="confirmpassword">Please confirm your password</label>
+			<input type="password" name="confirmpassword" id="pass2" onkeyup="manage(this)" required/>
+	
+			<br>
+			<br>
+			<input type="submit" id="register" value="register" disabled />
+			<button type = "reset" value = "reset" >reset</button>  
+			
+		</form>
+	</body>
+</html>

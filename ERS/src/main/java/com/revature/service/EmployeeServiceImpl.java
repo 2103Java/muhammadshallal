@@ -61,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public boolean login(String username, String password) {
+	public Employee login(String username, String password) {
 		logger.info("LOGIN SERVICE TO " + username);
 		return EmployeeRepositoryJdbc.getInstance().authenticate(username, password);
 	}

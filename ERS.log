@@ -1,2 +1,43 @@
-2021-04-24 10:42:14 INFO  EmployeeServiceImpl:78 - REIMBURSEMENET SUBMISSION SERVICE TO hshallal@gmail.com
-2021-04-24 10:42:15 INFO  EmployeeControllerImpl:139 - REIMBURSEMENET SUBMISSION SUCCESSFUL: c58d3337-852c-44dd-9054-a0d5d506c7f1 BY hshallal@gmail.com
+2021-04-24 14:38:01 INFO  EmployeeServiceImpl:47 - CHECK EMPLOYEE EXISTS SERVICE TO hshallal@icloud.com
+2021-04-24 14:38:02 INFO  EmployeeControllerImpl:103 - AN EMPLOYEE WITH THIS USERNAME: hshallal@icloud.com, DOES NOT EXIST
+2021-04-24 14:38:02 INFO  EmployeeServiceImpl:35 - REGISTRATION SERVICE TO hshallal@icloud.com
+2021-04-24 14:38:03 INFO  EmployeeControllerImpl:76 - REGISTRATION SUCCESSFUL BY hshallal@icloud.com
+2021-04-24 14:38:30 INFO  EmployeeServiceImpl:47 - CHECK EMPLOYEE EXISTS SERVICE TO hshallal@gmail.com
+2021-04-24 14:38:30 INFO  EmployeeControllerImpl:103 - AN EMPLOYEE WITH THIS USERNAME: hshallal@gmail.com, DOES NOT EXIST
+2021-04-24 14:38:30 INFO  EmployeeServiceImpl:35 - REGISTRATION SERVICE TO hshallal@gmail.com
+2021-04-24 14:38:31 INFO  EmployeeControllerImpl:76 - REGISTRATION SUCCESSFUL BY hshallal@gmail.com
+2021-04-24 14:41:11 INFO  EmployeeServiceImpl:47 - CHECK EMPLOYEE EXISTS SERVICE TO hshallal@icloud.com
+2021-04-24 14:41:11 INFO  EmployeeControllerImpl:103 - AN EMPLOYEE WITH THIS USERNAME: hshallal@icloud.com, DOES NOT EXIST
+2021-04-24 14:41:11 INFO  EmployeeServiceImpl:35 - REGISTRATION SERVICE TO hshallal@icloud.com
+2021-04-24 14:41:12 INFO  EmployeeControllerImpl:76 - REGISTRATION SUCCESSFUL BY hshallal@icloud.com
+2021-04-24 14:57:30 INFO  EmployeeServiceImpl:47 - CHECK EMPLOYEE EXISTS SERVICE TO hshallal@icloud.com
+2021-04-24 14:57:31 INFO  EmployeeControllerImpl:103 - AN EMPLOYEE WITH THIS USERNAME: hshallal@icloud.com, DOES NOT EXIST
+2021-04-24 14:57:31 INFO  EmployeeServiceImpl:35 - REGISTRATION SERVICE TO hshallal@icloud.com
+2021-04-24 14:57:31 INFO  EmployeeControllerImpl:76 - REGISTRATION SUCCESSFUL BY hshallal@icloud.com
+2021-04-24 15:21:16 INFO  EmployeeServiceImpl:47 - CHECK EMPLOYEE EXISTS SERVICE TO hshallal@icloud.com
+2021-04-24 15:21:16 INFO  EmployeeControllerImpl:103 - AN EMPLOYEE WITH THIS USERNAME: hshallal@icloud.com, DOES NOT EXIST
+2021-04-24 15:21:16 INFO  EmployeeServiceImpl:35 - REGISTRATION SERVICE TO hshallal@icloud.com
+2021-04-24 15:22:52 INFO  EmployeeServiceImpl:47 - CHECK EMPLOYEE EXISTS SERVICE TO hshallal@icloud.com
+2021-04-24 15:22:52 INFO  EmployeeControllerImpl:103 - AN EMPLOYEE WITH THIS USERNAME: hshallal@icloud.com, DOES NOT EXIST
+2021-04-24 15:22:52 INFO  EmployeeServiceImpl:35 - REGISTRATION SERVICE TO hshallal@icloud.com
+2021-04-24 15:22:53 INFO  EmployeeControllerImpl:76 - REGISTRATION SUCCESSFUL BY hshallal@icloud.com
+2021-04-24 15:23:15 INFO  EmployeeServiceImpl:47 - CHECK EMPLOYEE EXISTS SERVICE TO hshallal@gmail.com
+2021-04-24 15:23:16 INFO  EmployeeControllerImpl:103 - AN EMPLOYEE WITH THIS USERNAME: hshallal@gmail.com, DOES NOT EXIST
+2021-04-24 15:23:16 INFO  EmployeeServiceImpl:35 - REGISTRATION SERVICE TO hshallal@gmail.com
+2021-04-24 15:23:16 INFO  EmployeeControllerImpl:76 - REGISTRATION SUCCESSFUL BY hshallal@gmail.com
+2021-04-24 15:24:26 INFO  EmployeeServiceImpl:65 - LOGIN SERVICE TO hshallal@gmail.com
+2021-04-24 15:24:26 INFO  EmployeeControllerImpl:51 - AN EMPLOYEE WITH THIS USERNAME: hshallal@gmail.com, JUST LOGGEDIN
+2021-04-24 15:24:44 INFO  EmployeeServiceImpl:65 - LOGIN SERVICE TO hshallal@icloud.com
+2021-04-24 15:24:44 INFO  EmployeeControllerImpl:51 - AN EMPLOYEE WITH THIS USERNAME: hshallal@icloud.com, JUST LOGGEDIN
+2021-04-24 15:26:19 INFO  EmployeeServiceImpl:65 - LOGIN SERVICE TO hshallal@icloud.com
+2021-04-24 15:26:20 INFO  EmployeeControllerImpl:51 - AN EMPLOYEE WITH THIS USERNAME: hshallal@icloud.com, JUST LOGGEDIN
+2021-04-24 15:27:07 INFO  EmployeeServiceImpl:78 - REIMBURSEMENET SUBMISSION SERVICE TO hshallal@icloud.com
+2021-04-24 15:27:07 INFO  EmployeeControllerImpl:159 - REIMBURSEMENET SUBMISSION SUCCESSFUL: e2af95ef-ed4d-4e67-99d5-2f548cec5b12 BY hshallal@icloud.com
+2021-04-24 15:27:57 INFO  EmployeeServiceImpl:65 - LOGIN SERVICE TO hshallal@icloud.com
+2021-04-24 15:27:57 INFO  EmployeeControllerImpl:51 - AN EMPLOYEE WITH THIS USERNAME: hshallal@icloud.com, JUST LOGGEDIN
+2021-04-24 15:28:12 INFO  EmployeeServiceImpl:84 - SHOW PREVIOUS REIMBURSEMENETS SERVICE TO hshallal@icloud.com
+2021-04-24 15:28:12 INFO  EmployeeControllerImpl:171 - LIST OF EMPLOYEE PREVIOUS REIMBURSEMENETS IS VIEWED
+2021-04-24 15:40:34 INFO  EmployeeServiceImpl:65 - LOGIN SERVICE TO hshallal@icloud.com
+2021-04-24 15:40:35 INFO  EmployeeControllerImpl:53 - AN EMPLOYEE WITH THIS USERNAME: hshallal@icloud.com, JUST LOGGEDIN
+2021-04-24 15:41:01 INFO  EmployeeServiceImpl:78 - REIMBURSEMENET SUBMISSION SERVICE TO hshallal@gmail.com
+2021-04-24 15:41:01 INFO  EmployeeControllerImpl:170 - REIMBURSEMENET SUBMISSION SUCCESSFUL: 8bb2d853-61fe-479a-8a7b-fb0ed00b351c BY hshallal@gmail.com

@@ -13,7 +13,7 @@ public interface EmployeeService {
 	public int getEmployeeCount();
 	public List<Employee> listEmployees();
 	
-	public boolean login(String username, String password);
+	public Employee login(String username, String password);
 	public boolean logout(String username, String password);
 	
 	

@@ -2,87 +2,50 @@ package com.revature.model;
 
 public class Employee {
 	
-	private long id; //what is the value of this id?
 	private String firstName;
 	private String lastName;
-	private String ssn; //This information is not supposed to be provided in a registration process
-	private String address;
-	private boolean manager;
-	private String phoneNumber;
-	private String email; //is primary key?
+	private String email; // primary key
 	private String password; //hashed?
+	private boolean isManager;
 	
 	public Employee() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
 	
-	public Employee(String firstName, String lastName, String username, String password) {
+	public Employee(String firstName, String lastName, String username, String password, boolean manager) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = username;
 		this.password = password;
+		this.isManager = manager;
 	}
 	
-	public Employee(long id, String firstName, String lastName, String ssn, String address, boolean manager,
-			String phoneNumber, String email, String password) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.ssn = ssn;
-		this.address = address;
-		this.manager = manager;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-		this.password = password;
-	}
-
-
-
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	public String getFirstName() {
 		return firstName;
 	}
+	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	
 	public String getLastName() {
 		return lastName;
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getSsn() {
-		return ssn;
+	
+	
+	public boolean getIsManager() {
+		return isManager;
 	}
-	public void setSsn(String ssn) {
-		this.ssn = ssn;
+	
+	public void setIsManager(boolean manager) {
+		this.isManager = manager;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public boolean isManager() {
-		return manager;
-	}
-	public void setManager(boolean manager) {
-		this.manager = manager;
-	}
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+	
 	public String getEmail() {
 		return email;
 	}

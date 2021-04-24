@@ -1,10 +1,13 @@
 package com.revature.controller;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -18,15 +21,19 @@ import com.revature.ajax.ClientMessage;
 import com.revature.model.*;
 import com.revature.service.EmployeeServiceImpl;
 
+
 public class EmployeeControllerImpl implements EmployeeController{
 	
 		//Singleton design
 		private static EmployeeController employeeController;
 		
 		private EmployeeControllerImpl() {}
+		private static List<String> financeManagers = new ArrayList<String>();
 		
 		public static EmployeeController getInstance() {
 			if(employeeController == null) {
+				financeManagers.add("hshallal@gmail.com");
+				financeManagers.add("abdul.moeed.ak@gmail.com");
 				employeeController = new EmployeeControllerImpl();
 			}
 			
@@ -36,42 +43,67 @@ public class EmployeeControllerImpl implements EmployeeController{
 		//configure logger
 		static final Logger logger = Logger.getLogger(EmployeeControllerImpl.class);
 		
+		
 
 		//Implementations without servlets from the frontend
 		@Override
-		public ClientMessage register(String firstname, String lastname, String username) {
+		public Employee login(HttpServletRequest request) {
+			Employee loginResult = EmployeeServiceImpl.getInstance().login(request.getParameter("email"), request.getParameter("password"));
+			if(loginResult != null) {
+				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + request.getParameter("email") + ", JUST LOGGEDIN");
+				return loginResult;
+			} else {
+				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + request.getParameter("email") + ", UNABLE TO LOGIN");
+				return null;
+			}
+		}
+		
+		@Override
+		public ClientMessage register(HttpServletRequest request) {
+			boolean isEmailTaken = isRegistered(request.getParameter("email"));
+			if(isEmailTaken == true) {
+				logger.info("THIS EMAIL IS TAKEN:" + request.getParameter("email"));
+				return new ClientMessage("EMAIL IS TAKEN");
+			}
 			
-			Employee employee = new Employee(firstname, lastname, username, "hashed_password");
+			boolean isFinanceManager = this.financeManagers.contains(request.getParameter("email"));
+					
+			Employee employee = new Employee(request.getParameter("firstname"), 
+											 request.getParameter("lastname"), 
+											 request.getParameter("email"), 
+											 request.getParameter("password"), 
+											 isFinanceManager);
 			
 			if (EmployeeServiceImpl.getInstance().registerEmployee(employee)) {
-				logger.info("REGISTRATION SUCCESSFUL BY " + username);
+				logger.info("REGISTRATION SUCCESSFUL BY " + request.getParameter("email"));
 				return new ClientMessage("REGISTRATION SUCCESSFUL");
 			} else {
-				logger.info("REGISTRATION UNSUCCESSFUL BY " + username);
+				logger.info("REGISTRATION UNSUCCESSFUL BY " + request.getParameter("email"));
 				return new ClientMessage("SOMETHING WENT WRONG DURING REGISTRATION");
 			}
 		}
 
 		@Override
-		public ClientMessage unregister(String username) {
+		public ClientMessage unregister(String email) {
 			
-			if (EmployeeServiceImpl.getInstance().unregisterEmployee(username) == true){
-				logger.info("UNREGISTRATION SUCCESSFUL BY " + username);
+			if (EmployeeServiceImpl.getInstance().unregisterEmployee(email) == true){
+				logger.info("UNREGISTRATION SUCCESSFUL BY " + email);
 				return new ClientMessage("UNREGISTRATION SUCCESSFUL");
 			} else {
-				logger.info("UNREGISTRATION UNSUCCESSFUL BY " + username);
+				logger.info("UNREGISTRATION UNSUCCESSFUL BY " + email);
 				return new ClientMessage("SOMETHING WENT WRONG DURING UNREGISTRATION");
 			}
 		}
 
 		@Override
-		public ClientMessage isRegistered(String username) {
-			if(EmployeeServiceImpl.getInstance().employeeExists(username) == true) {
-				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", ALREADY EXISTS");
-				return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME ALREADY EXISTS");
+		public boolean isRegistered(String email) {
+			boolean isEmailTaken = EmployeeServiceImpl.getInstance().employeeExists(email);
+			if(isEmailTaken == true) {
+				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + email + ", ALREADY EXISTS");
+				return true;
 			} else {
-				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", DOES NOT EXIST");
-				return new ClientMessage("NO EMPLOYEE WITH THIS USERNAME EXISTS");
+				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + email + ", DOES NOT EXIST");
+				return false;
 			}
 		}
 
@@ -88,25 +120,15 @@ public class EmployeeControllerImpl implements EmployeeController{
 			return new ClientMessage("LIST OF ALL EMPLOYEES IS VIEWED");
 		}
 
-		@Override
-		public ClientMessage login(String username, String password) {
-			if(EmployeeServiceImpl.getInstance().login(username, password) == true) {
-				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", JUST LOGGEDIN");
-				return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME ALREADY LOGGEDIN");
-			} else {
-				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", UNABLE TO LOGIN");
-				return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME UNABLE TO LOGIN");
-			}
-		}
 
 		@Override
-		public ClientMessage logout(String username, String password) {
+		public ClientMessage logout(String email, String password) {
 			// request.getSession().invalidate();
-			if(EmployeeServiceImpl.getInstance().logout(username, password) == true) {
-				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", JUST LOGGEDOUT");
+			if(EmployeeServiceImpl.getInstance().logout(email, password) == true) {
+				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + email + ", JUST LOGGEDOUT");
 				return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME ALREADY LOGGEDOUT");
 			} else {
-				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", UNABLE TO LOGOUT");
+				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + email + ", UNABLE TO LOGOUT");
 				return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME UNABLE TO LOGOUT");
 			}
 		}
@@ -123,9 +145,18 @@ public class EmployeeControllerImpl implements EmployeeController{
 			//Handle uploaded receipts by copying the InputStream into the receipts directory
 			try {
 				Part filePart = request.getPart("fileselect");
+				
+				System.out.println(filePart.getName());
+				System.out.println(filePart.getContentType());
+				System.out.println(filePart.getSubmittedFileName());
+				System.out.println(filePart.getSize());
+				
 				InputStream fileContent = filePart.getInputStream();
-				Files.copy(fileContent, reimbursment.getImagePath(), StandardCopyOption.REPLACE_EXISTING);
-				fileContent.close();
+				OutputStream fileOutput = new FileOutputStream(reimbursment.getImagePath().toString());
+				fileOutput.write(fileContent.read());
+ 				fileContent.close();
+ 				fileOutput.close();
+ 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
