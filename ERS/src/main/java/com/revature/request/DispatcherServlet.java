@@ -25,6 +25,7 @@ public class DispatcherServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession httpSession = req.getSession(false);
+
 		if (httpSession != null) {
 			if (((Employee) httpSession.getAttribute("employee")).getIsManager())
 				resp.sendRedirect("mdash.html");

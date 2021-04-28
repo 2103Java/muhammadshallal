@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.revature.ajax.ClientMessage;
 import com.revature.controller.EmployeeControllerImpl;
+import com.revature.controller.FinancialManagerControllerImpl;
 
 public class RequestHelper {
 	
@@ -14,8 +15,6 @@ public class RequestHelper {
 		switch(whatToDo) {
 			case "unregisterEmployee":
 				return EmployeeControllerImpl.getInstance().unregister(username);
-			case "viewAllEmployees":
-				return EmployeeControllerImpl.getInstance().viewAllEmployees();
 			case "logout":
 				return EmployeeControllerImpl.getInstance().logout(username, password);
 			
@@ -31,12 +30,13 @@ public class RequestHelper {
 			case "/ERS/RegisterServlet":
 				return EmployeeControllerImpl.getInstance().register(request);
 			case "/ERS/EmployeeCountServlet":
-				return EmployeeControllerImpl.getInstance().getEmployeeCount(request);
+				return FinancialManagerControllerImpl.getInstance().getEmployeeCount();
 			case "/ERS/submitReimbursementServlet":
 				return EmployeeControllerImpl.getInstance().submitReimbursement(request);
 			case "/ERS/showEmployeeReimbursmentsServlet":
 				return EmployeeControllerImpl.getInstance().showEmployeeReimbursements(request);
-			
+			case "/ERS/showReimbursmentsServlet":
+				return FinancialManagerControllerImpl.getInstance().showReimbursements(request);
 
 			default:
 				return new ClientMessage("not-implemented yes");

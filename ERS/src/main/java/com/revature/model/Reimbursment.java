@@ -32,6 +32,22 @@ public class Reimbursment {
 		this.imagePath = fileToSave.toPath();
 
 	}
+	
+	public Reimbursment(String id, String employeeId, Double amount, String type, String status, LocalDate submissionDate, String description) {
+		super();
+		this.id = id;
+		this.employeeId = employeeId;
+		this.amount = amount;
+		this.type = type;
+		this.description = description;
+		this.status = status; //any reimbursement request starts as pending
+		this.submissionDate = submissionDate;
+		
+		//String cwd = Path.of("").toAbsolutePath().toString();
+		File fileToSave = new File(".\\receiptImages\\" + this.id);
+		this.imagePath = fileToSave.toPath();
+
+	}
 
 	public String getId() {
 		return id;

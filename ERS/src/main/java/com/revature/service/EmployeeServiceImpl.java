@@ -55,12 +55,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<Employee> listEmployees() {
-		logger.info("LIST ALL EMPLOYEES SERVICE");
-		return EmployeeRepositoryJdbc.getInstance().selectAllEmployees();
-	}
-
-	@Override
 	public Employee login(String username, String password) {
 		logger.info("LOGIN SERVICE TO " + username);
 		return EmployeeRepositoryJdbc.getInstance().authenticate(username, password);
@@ -80,9 +74,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<Reimbursment> showMyPreviousReimbursments(String username) {
-		logger.info("SHOW PREVIOUS REIMBURSEMENETS SERVICE TO " + username);
-		return ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeId(username);
+	public List<Reimbursment> showMyPreviousReimbursments(String username, String filter) {
+		logger.info("SHOW PREVIOUS AND " + filter.toUpperCase() + " REIMBURSEMENETS SERVICE TO " + username);
+		if(filter.equals("all")) {
+			return ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeId(username);
+		} else if(filter.equals("pending") || filter.equals("approved") || filter.equals("denied")){
+			return ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeStatus(username, filter);
+		} else {
+			return ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeType(username, filter);
+		}
 	}
 }
 

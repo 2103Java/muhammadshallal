@@ -27,8 +27,31 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 
 	@Override
 	public List<Reimbursment> selectAllReimbursments() {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+					
+			String command = "SELECT * FROM reimbursments";
+			PreparedStatement statement = connection.prepareStatement(command);
+			
+			ResultSet result = statement.executeQuery();
+
+			List<Reimbursment> reimbursmentList = new ArrayList<>();
+			while(result.next()) {
+				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("description"));
+				reimbursment.setStatus(result.getString("status"));
+				reimbursmentList.add(reimbursment);
+			}
+
+			return reimbursmentList;
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Issues with selecting all employees.");
+			e.printStackTrace();
+		} 
+		return new ArrayList<>();
 	}
 	
 	@Override
@@ -48,10 +71,45 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 
 			List<Reimbursment> reimbursmentList = new ArrayList<>();
 			while(result.next()) {
-				reimbursmentList.add(new Reimbursment(result.getString("employeeId"), 
-											  result.getDouble("amount"),
-											  result.getString("typeof"),
-											  result.getString("description")));
+				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("description"));
+				reimbursment.setStatus(result.getString("status"));
+				reimbursmentList.add(reimbursment);
+			}
+
+			return reimbursmentList;
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Issues with selecting all employees.");
+			e.printStackTrace();
+		} 
+		return new ArrayList<>();
+	}
+    
+	@Override
+	public List<Reimbursment> selectByType(String type) {
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+					
+			int statementIndex = 0;
+			String command = "SELECT * FROM reimbursments WHERE typeof=?";
+			PreparedStatement statement = connection.prepareStatement(command);
+
+			//Set attributes to be inserted
+			statement.setString(++statementIndex, type);
+			
+			ResultSet result = statement.executeQuery();
+
+			List<Reimbursment> reimbursmentList = new ArrayList<>();
+			while(result.next()) {
+				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("description"));
+				reimbursment.setStatus(result.getString("status"));
+				reimbursmentList.add(reimbursment);
 			}
 
 			return reimbursmentList;
@@ -63,15 +121,101 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 	}
 
 	@Override
-	public List<Reimbursment> selectByType(String type) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Reimbursment> selectByStatus(String status) {
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+					
+			int statementIndex = 0;
+			String command = "SELECT * FROM reimbursments WHERE status=?";
+			PreparedStatement statement = connection.prepareStatement(command);
+
+			//Set attributes to be inserted
+			statement.setString(++statementIndex, status);
+			
+			ResultSet result = statement.executeQuery();
+
+			List<Reimbursment> reimbursmentList = new ArrayList<>();
+			while(result.next()) {
+				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("description"));
+				reimbursment.setStatus(result.getString("status"));
+				reimbursmentList.add(reimbursment);
+			}
+
+			return reimbursmentList;
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Issues with selecting all employees.");
+			e.printStackTrace();
+		} 
+		return new ArrayList<>();
+	}
+	
+	
+	@Override
+	public List<Reimbursment> selectByEmployeeType(String employeeId, String type) {
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+					
+			int statementIndex = 0;
+			String command = "SELECT * FROM reimbursments WHERE employeeId=? AND typeof=?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setString(++statementIndex, employeeId.toLowerCase());
+			statement.setString(++statementIndex, type);
+			ResultSet result = statement.executeQuery();
+
+			List<Reimbursment> reimbursmentList = new ArrayList<>();
+			while(result.next()) {
+				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("description"));
+					reimbursment.setStatus(result.getString("status"));
+					reimbursmentList.add(reimbursment);
+				}
+
+				return reimbursmentList;
+				
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Issues with selecting all employees.");
+			e.printStackTrace();
+		} 
+		return new ArrayList<>();
 	}
 
 	@Override
-	public List<Reimbursment> selectByStatus(String status) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Reimbursment> selectByEmployeeStatus(String employeeId, String status) {
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+					
+			int statementIndex = 0;
+			String command = "SELECT * FROM reimbursments WHERE employeeId=? AND status=?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setString(++statementIndex, employeeId.toLowerCase());
+			statement.setString(++statementIndex, status);
+			ResultSet result = statement.executeQuery();
+
+			List<Reimbursment> reimbursmentList = new ArrayList<>();
+			while(result.next()) {
+				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("description"));
+					reimbursment.setStatus(result.getString("status"));
+					reimbursmentList.add(reimbursment);
+				}
+
+				return reimbursmentList;
+				
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Issues with selecting all employees.");
+			e.printStackTrace();
+		} 
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -104,10 +248,33 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		return false;
 	}
 
+
 	@Override
 	public boolean delete(String reimbursmentId) {
-		// TODO Auto-generated method stub
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			
+			int statementIndex = 0;
+			String command = "DELETE FROM reimbursments WHERE id=?";
+			
+			PreparedStatement statement = connection.prepareStatement(command);
+
+			//Set attributes to be inserted
+			statement.setString(++statementIndex, reimbursmentId);
+			
+			if(statement.executeUpdate() > 0) {
+				return true;
+			}
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Issues with deleting a reimbursment.");
+			e.printStackTrace();
+		}
+
 		return false;
 	}
+
+	
 	
 }

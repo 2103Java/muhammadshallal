@@ -11,15 +11,12 @@ public interface EmployeeService {
 	
 	public boolean employeeExists(String username);
 	public int getEmployeeCount();
-	public List<Employee> listEmployees();
+	
 	
 	public Employee login(String username, String password);
 	public boolean logout(String username, String password);
 	
 	
 	public boolean submitReimbursment(Reimbursment reimbursment);
-	public List<Reimbursment> showMyPreviousReimbursments(String username);
-	
-	
-	
+	public List<Reimbursment> showMyPreviousReimbursments(String username, String status);
 }

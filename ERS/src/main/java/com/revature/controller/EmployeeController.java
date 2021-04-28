@@ -18,7 +18,7 @@ public interface EmployeeController {
 	public ClientMessage unregister(String email);
 	
 	public boolean isRegistered(String email);
-	public ClientMessage viewAllEmployees();
+	
 	public ClientMessage logout(String email, String password);
 	
 	public Employee login(HttpServletRequest request);
@@ -26,6 +26,5 @@ public interface EmployeeController {
 	
 	public ClientMessage submitReimbursement(HttpServletRequest request);
 	public List<Reimbursment> showEmployeeReimbursements(HttpServletRequest request);
-	public int getEmployeeCount(HttpServletRequest request);
 	
 }
