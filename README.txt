@@ -1,18 +1,14 @@
 This commit is a major merger and represents itself to further improvement.
 
 Major dones:
-1) Employee can show only his/her all or pending or approved or denied or Lodging or Travel or Food or Other previous reimbursements
-2) Finance managers can show all or pending or approved or denied or Lodging or Travel or Food or Other reimbursements for all employees
+1) Overloaded Reimbursment constructor used appropriagely to retreive data from rds
+2) http session is connected across services so that authenticated user no longer needs to submit their credentials once they are logged in
 
 Priorities:
-0) Use overloaded Reimbursment constructor to instantiate reimbursement objects retreived from the database to
-show for either an employee or for a finance manager. Use it solely in the ReimbursmentRepositoryJdbc, modify the
-table in the showReimbursmentsServlet so as to provide finance managers with all data they need
 1) Allow finance managers to modify the status of a pending ticket
-2) connect http session across pages
-3) pass email between servlets after authentication
-4) fix fileupload of receipt images
-5) Front end needs serious focus
+2) Implement logout by terminating the http session using session.invalidate()
+2) fix fileupload of receipt images
+3) Front end needs serious focus
 
 Pending Tasks:
 1) Go through logging everything that needs to be logged

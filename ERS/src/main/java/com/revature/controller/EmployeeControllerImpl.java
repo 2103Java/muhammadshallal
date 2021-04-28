@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
@@ -121,8 +122,12 @@ public class EmployeeControllerImpl implements EmployeeController{
 
 		@Override
 		public ClientMessage submitReimbursement(HttpServletRequest request) {
+			HttpSession httpSession = request.getSession(false);
+			String id = (String) httpSession.getAttribute("employeeId");
+			System.out.println("id from session in submitReimbursement controller:" + id);
+	
 			
-			Reimbursment reimbursment =  new Reimbursment(request.getParameter("username"), 
+			Reimbursment reimbursment =  new Reimbursment(id, 
                     Double.parseDouble(request.getParameter("Amount")), 
                     request.getParameter("category"),
                     request.getParameter("Description"));
@@ -160,7 +165,11 @@ public class EmployeeControllerImpl implements EmployeeController{
 		
 		@Override
 		public List<Reimbursment> showEmployeeReimbursements(HttpServletRequest request) {
-			List<Reimbursment> employeeReimbursmentList = EmployeeServiceImpl.getInstance().showMyPreviousReimbursments(request.getParameter("username"), request.getParameter("filter"));
+			HttpSession httpSession = request.getSession(false);
+			String id = (String) httpSession.getAttribute("employeeId");
+			System.out.println("id from session in showEmployeeReimbursements controller:" + id);
+			
+			List<Reimbursment> employeeReimbursmentList = EmployeeServiceImpl.getInstance().showMyPreviousReimbursments(id, request.getParameter("filter"));
 			
 			logger.info("LIST OF EMPLOYEE PREVIOUS REIMBURSEMENETS IS VIEWED");
 			return employeeReimbursmentList;

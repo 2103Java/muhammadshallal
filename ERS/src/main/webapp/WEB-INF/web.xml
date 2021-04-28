@@ -50,4 +50,34 @@
     <servlet-name>showReimbursmentsServlet</servlet-name>
     <url-pattern>/showReimbursmentsServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>employeeServices</display-name>
+    <servlet-name>employeeServices</servlet-name>
+    <servlet-class>com.revature.request.employeeServices</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>employeeServices</servlet-name>
+    <url-pattern>/employeeServices</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EmployeeServlet</display-name>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <servlet-class>com.revature.request.EmployeeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <url-pattern>/EmployeeServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FinanceManagerServlet</display-name>
+    <servlet-name>FinanceManagerServlet</servlet-name>
+    <servlet-class>com.revature.request.FinanceManagerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FinanceManagerServlet</servlet-name>
+    <url-pattern>/FinanceManagerServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

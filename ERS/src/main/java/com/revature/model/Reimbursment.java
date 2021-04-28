@@ -33,6 +33,7 @@ public class Reimbursment {
 
 	}
 	
+	//Overloaded constructor for retreiving objects from the database
 	public Reimbursment(String id, String employeeId, Double amount, String type, String status, LocalDate submissionDate, String description) {
 		super();
 		this.id = id;

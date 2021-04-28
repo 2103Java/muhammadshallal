@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +39,14 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 
 			List<Reimbursment> reimbursmentList = new ArrayList<>();
 			while(result.next()) {
-				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
 						  result.getDouble("amount"),
 						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
 						  result.getString("description"));
-				reimbursment.setStatus(result.getString("status"));
 				reimbursmentList.add(reimbursment);
 			}
 
@@ -71,11 +75,14 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 
 			List<Reimbursment> reimbursmentList = new ArrayList<>();
 			while(result.next()) {
-				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
 						  result.getDouble("amount"),
 						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
 						  result.getString("description"));
-				reimbursment.setStatus(result.getString("status"));
 				reimbursmentList.add(reimbursment);
 			}
 
@@ -104,11 +111,14 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 
 			List<Reimbursment> reimbursmentList = new ArrayList<>();
 			while(result.next()) {
-				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
 						  result.getDouble("amount"),
 						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
 						  result.getString("description"));
-				reimbursment.setStatus(result.getString("status"));
 				reimbursmentList.add(reimbursment);
 			}
 
@@ -137,11 +147,14 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 
 			List<Reimbursment> reimbursmentList = new ArrayList<>();
 			while(result.next()) {
-				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
 						  result.getDouble("amount"),
 						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
 						  result.getString("description"));
-				reimbursment.setStatus(result.getString("status"));
 				reimbursmentList.add(reimbursment);
 			}
 
@@ -169,12 +182,15 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 
 			List<Reimbursment> reimbursmentList = new ArrayList<>();
 			while(result.next()) {
-				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
 						  result.getDouble("amount"),
 						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
 						  result.getString("description"));
-					reimbursment.setStatus(result.getString("status"));
-					reimbursmentList.add(reimbursment);
+				reimbursmentList.add(reimbursment);
 				}
 
 				return reimbursmentList;
@@ -201,12 +217,15 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 
 			List<Reimbursment> reimbursmentList = new ArrayList<>();
 			while(result.next()) {
-				Reimbursment reimbursment = new Reimbursment(result.getString("employeeId"), 
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
 						  result.getDouble("amount"),
 						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
 						  result.getString("description"));
-					reimbursment.setStatus(result.getString("status"));
-					reimbursmentList.add(reimbursment);
+				reimbursmentList.add(reimbursment);
 				}
 
 				return reimbursmentList;
