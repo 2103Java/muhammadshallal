@@ -38,13 +38,7 @@ public class FinancialManagerServiceImpl implements FinancialManagerService {
 	@Override
 	public ClientMessage viewAllEmployees() {
 		List<Employee> employeeList = FinancialManagerServiceImpl.getInstance().listEmployees();
-		
-		logger.info("LIST OF ALL EMPLOYEES IS VIEWED");
-		//view employeeList, but for the time being, just print them in console
-		for(Employee employee : employeeList) {
-			System.out.println(employee.toString());
-		}
-		
+		logger.info("LIST OF ALL EMPLOYEES IS VIEWED BY A FINANCE MANAGER");		
 		return new ClientMessage("LIST OF ALL EMPLOYEES IS VIEWED");
 	}
 
@@ -59,5 +53,4 @@ public class FinancialManagerServiceImpl implements FinancialManagerService {
 			return ReimbursmentRepositoryJdbc.getInstance().selectByType(filter);
 		}
 	}
-	
 }

@@ -60,12 +60,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return EmployeeRepositoryJdbc.getInstance().authenticate(username, password);
 	}
 
-	@Override
-	public boolean logout(String username, String password) {
-		logger.info("LOGOUT SERVICE TO " + username);
-		return EmployeeRepositoryJdbc.getInstance().deauthenticate(username, password);
-	}
-
 	
 	@Override
 	public boolean submitReimbursment(Reimbursment reimbursment) {

@@ -21,7 +21,6 @@ public class EmployeeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession httpSession = request.getSession(false);
 		String id = (String) httpSession.getAttribute("employeeId");
-		System.out.println("id from session in EmployeeServlet:" + id);
 		
 		// get response writer
 		PrintWriter writer = response.getWriter();
@@ -39,6 +38,7 @@ public class EmployeeServlet extends HttpServlet {
 				+ "		<a href=\"/ERS/showEmployeeReimbursmentsServlet\">Show my previous reimbursements</a>\r\n"
 				+ "		<br>\r\n"
 				+ "		<br>\r\n"
+				+ "     <a href=\"/ERS/LogoutServlet\">Logout</a>\r\n"
 				+ "	</body>\r\n"
 				+ "</html>";
 		

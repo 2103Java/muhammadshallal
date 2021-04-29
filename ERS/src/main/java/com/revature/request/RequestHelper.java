@@ -15,9 +15,6 @@ public class RequestHelper {
 		switch(whatToDo) {
 			case "unregisterEmployee":
 				return EmployeeControllerImpl.getInstance().unregister(username);
-			case "logout":
-				return EmployeeControllerImpl.getInstance().logout(username, password);
-			
 			default:
 				return new ClientMessage("not-implemented yes");
 		}
@@ -26,7 +23,9 @@ public class RequestHelper {
 	public static Object process(HttpServletRequest request) {
 		switch(request.getRequestURI()) {
 			case "/ERS/AuthServlet":
-				return EmployeeControllerImpl.getInstance().login(request);		
+				return EmployeeControllerImpl.getInstance().login(request);	
+			case "/ERS/LogoutServlet":
+				return EmployeeControllerImpl.getInstance().logout(request);
 			case "/ERS/RegisterServlet":
 				return EmployeeControllerImpl.getInstance().register(request);
 			case "/ERS/EmployeeCountServlet":

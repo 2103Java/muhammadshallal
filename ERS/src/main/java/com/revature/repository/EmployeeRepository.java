@@ -14,8 +14,8 @@ public interface EmployeeRepository {
 	public boolean insert(Employee employee);
 	public boolean delete(String username);
 	
-	public Employee authenticate(String username, String password); //NIY
-	public boolean deauthenticate(String username, String password); //NIY
+	public Employee authenticate(String username, String password);
+	
 	
 	// Do we want to include updates to the reimbursement requests?
 //	public boolean updateUsername(String oldUsername, String newUsername); 

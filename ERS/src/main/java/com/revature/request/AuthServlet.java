@@ -32,11 +32,9 @@ public class AuthServlet extends HttpServlet {
 			HttpSession httpSession = request.getSession();
 			httpSession.setAttribute("employeeId", employee.getEmail());
 			if (employee.getIsManager()) {
-				System.out.println("manager");
 				response.sendRedirect("/ERS/FinanceManagerServlet");
 			}
 			else {
-				System.out.println("employee");
 				response.sendRedirect("/ERS/EmployeeServlet");
 			}
 		}

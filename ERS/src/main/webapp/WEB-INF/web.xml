@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <servlet>
-    <servlet-name>AuthServlet</servlet-name>
-    <servlet-class>com.revature.request.AuthServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AuthServlet</servlet-name>
-    <url-pattern>/AuthServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>RegisterServlet</servlet-name>
     <servlet-class>com.revature.request.RegisterServlet</servlet-class>
   </servlet>
@@ -41,8 +33,6 @@
     <url-pattern>/submitReimbursementServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>showReimbursmentsServlet</display-name>
     <servlet-name>showReimbursmentsServlet</servlet-name>
     <servlet-class>com.revature.request.showReimbursmentsServlet</servlet-class>
   </servlet>
@@ -51,18 +41,6 @@
     <url-pattern>/showReimbursmentsServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>employeeServices</display-name>
-    <servlet-name>employeeServices</servlet-name>
-    <servlet-class>com.revature.request.employeeServices</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>employeeServices</servlet-name>
-    <url-pattern>/employeeServices</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>EmployeeServlet</display-name>
     <servlet-name>EmployeeServlet</servlet-name>
     <servlet-class>com.revature.request.EmployeeServlet</servlet-class>
   </servlet>
@@ -71,13 +49,27 @@
     <url-pattern>/EmployeeServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>FinanceManagerServlet</display-name>
     <servlet-name>FinanceManagerServlet</servlet-name>
     <servlet-class>com.revature.request.FinanceManagerServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>FinanceManagerServlet</servlet-name>
     <url-pattern>/FinanceManagerServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.revature.request.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AuthServlet</servlet-name>
+    <servlet-class>com.revature.request.AuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthServlet</servlet-name>
+    <url-pattern>/AuthServlet</url-pattern>
   </servlet-mapping>
 </web-app>

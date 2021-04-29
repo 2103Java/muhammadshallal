@@ -18,10 +18,9 @@ public interface EmployeeController {
 	public ClientMessage unregister(String email);
 	
 	public boolean isRegistered(String email);
-	
-	public ClientMessage logout(String email, String password);
-	
+		
 	public Employee login(HttpServletRequest request);
+	public ClientMessage logout(HttpServletRequest request);
 	public ClientMessage register(HttpServletRequest request);
 	
 	public ClientMessage submitReimbursement(HttpServletRequest request);

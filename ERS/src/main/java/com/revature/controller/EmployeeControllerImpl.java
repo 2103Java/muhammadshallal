@@ -108,24 +108,21 @@ public class EmployeeControllerImpl implements EmployeeController{
 			}
 		}
 
+		//We logout upstream at the controller level by invoking request.getSession().invalidate();
 		@Override
-		public ClientMessage logout(String email, String password) {
-			// request.getSession().invalidate();
-			if(EmployeeServiceImpl.getInstance().logout(email, password) == true) {
-				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + email + ", JUST LOGGEDOUT");
-				return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME ALREADY LOGGEDOUT");
-			} else {
-				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + email + ", UNABLE TO LOGOUT");
-				return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME UNABLE TO LOGOUT");
-			}
+		public ClientMessage logout(HttpServletRequest request) {
+			HttpSession httpSession = request.getSession(false);
+			String id = (String) httpSession.getAttribute("employeeId");	
+			httpSession.invalidate();
+			logger.info("AN EMPLOYEE WITH THIS USERNAME: " + id + ", JUST LOGGEDOUT");
+			return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME ALREADY LOGGEDOUT");
+			
 		}
 
 		@Override
 		public ClientMessage submitReimbursement(HttpServletRequest request) {
 			HttpSession httpSession = request.getSession(false);
-			String id = (String) httpSession.getAttribute("employeeId");
-			System.out.println("id from session in submitReimbursement controller:" + id);
-	
+			String id = (String) httpSession.getAttribute("employeeId");	
 			
 			Reimbursment reimbursment =  new Reimbursment(id, 
                     Double.parseDouble(request.getParameter("Amount")), 
@@ -167,8 +164,7 @@ public class EmployeeControllerImpl implements EmployeeController{
 		public List<Reimbursment> showEmployeeReimbursements(HttpServletRequest request) {
 			HttpSession httpSession = request.getSession(false);
 			String id = (String) httpSession.getAttribute("employeeId");
-			System.out.println("id from session in showEmployeeReimbursements controller:" + id);
-			
+
 			List<Reimbursment> employeeReimbursmentList = EmployeeServiceImpl.getInstance().showMyPreviousReimbursments(id, request.getParameter("filter"));
 			
 			logger.info("LIST OF EMPLOYEE PREVIOUS REIMBURSEMENETS IS VIEWED");

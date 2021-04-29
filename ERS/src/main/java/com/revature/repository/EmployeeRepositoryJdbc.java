@@ -15,6 +15,9 @@ import java.util.List;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import org.apache.log4j.Logger;
+
+import com.revature.controller.EmployeeControllerImpl;
 import com.revature.model.Employee;
 import com.revature.util.ConnectionUtil;
 
@@ -33,6 +36,9 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 		return employeeRepository;
 	}
 	
+	//configure logger
+	static final Logger logger = Logger.getLogger(EmployeeRepositoryJdbc.class);
+			
 	//Hashing password
 	protected String hashPass(String pass) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		byte[] salt = new byte[16];
@@ -61,14 +67,16 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 			ResultSet result = statement.executeQuery();
 
 			if(result.next()) {
+				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", IS FOUND IN RDS");
 				return true;
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with selecting an employee.");
+			logger.debug("ISSUES SELECTING AN EMPLOYEE WITH USERNAME: " + username);
 			e.printStackTrace();
 		}
 		
+		logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", IS NOT FOUND IN RDS");
 		return false;
 	}
 	
@@ -96,12 +104,13 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 											  result.getString("password"),
 			            					  result.getBoolean("isManager")));
 			}
-
+			logger.info("ALL EMPLOYEES ARE SELECTED");
 			return employeeList;
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with selecting all employees.");
+			logger.debug("ISSUES WITH SELECTING ALL EMPLOYEES");
 			e.printStackTrace();
 		} 
+		logger.info("EMPTY EMPLOYEES TABLE");
 		return new ArrayList<>();
 	}
 
@@ -126,13 +135,15 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 			statement.setBoolean(++statementIndex, employee.getIsManager());
 			
 			if(statement.executeUpdate() > 0) {
+				logger.info("AN EMPLOYEE IS INSERTED TO THE RDS");
 				return true;
 			}
 			
 		} catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-			System.out.println("Issues with registering an employee.");
+			logger.debug("ISSUES WITH INSERTING AN EMPLOYEE");
 			e.printStackTrace();
 		}
+		logger.debug("ISSUES WITH INSERTING AN EMPLOYEE NON EXCEPTION");
 		return false;
 	}
 
@@ -152,14 +163,14 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 			statement.setString(++statementIndex, username.toLowerCase());
 			
 			if(statement.executeUpdate() > 0) {
+				logger.info("AN EMPLOYEE IS DELETED FROM THE RDS");
 				return true;
 			}
-			
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with deleting an employee.");
+			logger.debug("ISSUES WITH DELETING AN EMPLOYEE");
 			e.printStackTrace();
 		}
-
+		logger.debug("ISSUES WITH DELETING AN EMPLOYEE NON EXCEPTION");
 		return false;
 	}
 
@@ -182,24 +193,20 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 			ResultSet result = statement.executeQuery();
 
 			if(result.next()) {
+				logger.info("AN EMPLOYEE IS AUTHENTICATED");
 				return new Employee(result.getString("firstname"), 
 						            result.getString("lastname"),
 						            result.getString("email"), 
 						            result.getString("password"), 
 						            result.getBoolean("isManager"));
+				
 			} else {
+				logger.debug("AN UNREGISTERED EMPLOYEE TRIED TO AUTHENTICATE");
 				return null;
 			}
 		} catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+			logger.debug("ISSUES WITH AN EMPLOYEE BEING AUTHENTICATED");
 			return null;
 		}
-	}
-
-	//This method may be unnecessary since we logout upstream at the controller level
-	//by invoking request.getSession().invalidate();
-	@Override
-	public boolean deauthenticate(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

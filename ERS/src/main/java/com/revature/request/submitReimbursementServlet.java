@@ -73,6 +73,9 @@ public class submitReimbursementServlet extends HttpServlet {
 				+ "			<br>\r\n"
 				+ "			<input type=\"submit\" value=\"Submit\">\r\n"
 				+ "		</form>\r\n"
+				+ "		<br>\r\n"
+				+ "		<br>\r\n"
+				+ "     <a href=\"/ERS/LogoutServlet\">Logout</a>\r\n"
 				+ "	</body>\r\n"
 				+ "	</html>";
 		

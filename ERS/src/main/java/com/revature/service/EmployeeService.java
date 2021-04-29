@@ -14,8 +14,6 @@ public interface EmployeeService {
 	
 	
 	public Employee login(String username, String password);
-	public boolean logout(String username, String password);
-	
 	
 	public boolean submitReimbursment(Reimbursment reimbursment);
 	public List<Reimbursment> showMyPreviousReimbursments(String username, String status);

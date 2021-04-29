@@ -21,7 +21,6 @@ public class FinanceManagerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession httpSession = request.getSession(false);
 		String id = (String) httpSession.getAttribute("employeeId");
-		System.out.println("id from session in FinanceManagerServlet:" + id);
 		
 		// get response writer
 		PrintWriter writer = response.getWriter();
@@ -32,9 +31,12 @@ public class FinanceManagerServlet extends HttpServlet {
 				+ "		<title>Finance manager services</title>\r\n"
 				+ "	</head>\r\n"
 				+ "	<body>\r\n"
+				+ "		<br>\r\n"
+				+ "		<br>\r\n"
 				+ "		<a href=\"/ERS/showReimbursmentsServlet\">Show reimbursements</a>\r\n"
 				+ "		<br>\r\n"
 				+ "		<br>\r\n"
+				+ "     <a href=\"/ERS/LogoutServlet\">Logout</a>\r\n"
 				+ "	</body>\r\n"
 				+ "</html>";
 		

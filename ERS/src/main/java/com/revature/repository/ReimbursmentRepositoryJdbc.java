@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.revature.model.Reimbursment;
 import com.revature.util.ConnectionUtil;
 	
@@ -25,6 +27,9 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		
 		return reimbursmentRepository;
 	}
+	
+	//configure logger
+	static final Logger logger = Logger.getLogger(ReimbursmentRepositoryJdbc.class);
 
 	@Override
 	public List<Reimbursment> selectAllReimbursments() {
@@ -49,12 +54,14 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 						  result.getString("description"));
 				reimbursmentList.add(reimbursment);
 			}
-
+			logger.info("ALL REIMBURSEMENTS ARE SELECTED");
 			return reimbursmentList;
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with selecting all employees.");
+			logger.debug("ISSUES WITH SELECTING ALL REIMBURSEMENTS");
 			e.printStackTrace();
 		} 
+		
+		logger.info("EMPTY REIMBURSEMENTS TABLE");
 		return new ArrayList<>();
 	}
 	
@@ -85,12 +92,13 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 						  result.getString("description"));
 				reimbursmentList.add(reimbursment);
 			}
-
+			logger.info("REIMBURSEMENTS OF EMPLOYEE WITH THIS USERNAME: " + employeeId.toUpperCase() + ", WERE FOUND IN RDS");
 			return reimbursmentList;
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with selecting all employees.");
+			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF EMPLOYEE WITH THIS USERNAME: " + employeeId.toUpperCase() + ", IN RDS");
 			e.printStackTrace();
 		} 
+		logger.info("NO REIMBURSEMENTS FOR EMPLOYEE WITH THIS USERNAME: " + employeeId.toUpperCase() + ", WERE FOUND IN RDS");
 		return new ArrayList<>();
 	}
     
@@ -121,12 +129,15 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 						  result.getString("description"));
 				reimbursmentList.add(reimbursment);
 			}
+			logger.info("REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + ", WERE FOUND IN RDS");
 
 			return reimbursmentList;
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with selecting all employees.");
+			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + ", IN RDS");
 			e.printStackTrace();
 		} 
+		
+		logger.info("NO REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + ", WERE FOUND IN RDS");
 		return new ArrayList<>();
 	}
 
@@ -157,12 +168,13 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 						  result.getString("description"));
 				reimbursmentList.add(reimbursment);
 			}
-
+			logger.info("REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + ", WERE FOUND IN RDS");
 			return reimbursmentList;
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with selecting all employees.");
+			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + ", IN RDS");
 			e.printStackTrace();
 		} 
+		logger.info("NO REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + ", WERE FOUND IN RDS");
 		return new ArrayList<>();
 	}
 	
@@ -192,13 +204,14 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 						  result.getString("description"));
 				reimbursmentList.add(reimbursment);
 				}
-
-				return reimbursmentList;
+			logger.info("REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
+			return reimbursmentList;
 				
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with selecting all employees.");
+			logger.debug("ISSUES FINDING REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", IN RDS");
 			e.printStackTrace();
 		} 
+		logger.info("NO REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
 		return new ArrayList<>();
 	}
 
@@ -227,13 +240,14 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 						  result.getString("description"));
 				reimbursmentList.add(reimbursment);
 				}
-
-				return reimbursmentList;
+			logger.info("REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
+			return reimbursmentList;
 				
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with selecting all employees.");
+			logger.debug("ISSUES FINDING REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", IN RDS");
 			e.printStackTrace();
 		} 
+		logger.info("NO REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
 		return new ArrayList<>();
 	}
 
@@ -257,13 +271,15 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 			
 			
 			if(statement.executeUpdate() > 0) {
+				logger.info("A REIMBURSEMENT IS INSERTED TO THE RDS");
 				return true;
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with inserting a reimbursment.");
+			logger.debug("ISSUES WITH INSERTING A REIMBURSEMENT");
 			e.printStackTrace();
 		}
+		logger.debug("ISSUES WITH INSERTING A REIMBURSEMENT NON EXCEPTION");
 		return false;
 	}
 
@@ -283,14 +299,15 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 			statement.setString(++statementIndex, reimbursmentId);
 			
 			if(statement.executeUpdate() > 0) {
+				logger.info("A REIMBURSEMENT IS DELETED FROM THE RDS");
 				return true;
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with deleting a reimbursment.");
+			logger.debug("ISSUES WITH DELETING A REIMBURSEMENT");
 			e.printStackTrace();
 		}
-
+		logger.debug("ISSUES WITH DELETING A REIMBURSEMENT NON EXCEPTION");
 		return false;
 	}
 
