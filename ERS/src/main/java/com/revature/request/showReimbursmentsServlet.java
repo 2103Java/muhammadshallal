@@ -26,7 +26,6 @@ public class showReimbursmentsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession httpSession = request.getSession(false);
 		String id = (String) httpSession.getAttribute("employeeId");
-		System.out.println("id from session in doGet showReimbursmentsServlet:" + id);
 		
 		// get response writer
 		PrintWriter writer = response.getWriter();
@@ -77,7 +76,7 @@ public class showReimbursmentsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession httpSession = request.getSession(false);
 		String id = (String) httpSession.getAttribute("employeeId");
-		System.out.println("id from session in doPost showReimbursmentsServlet:" + id);
+		
 		//Pass request to controller
 		Object fromController =  RequestHelper.process(request);
 		List<Reimbursment> previousReimbursements = (List<Reimbursment>) fromController;
@@ -96,10 +95,12 @@ public class showReimbursmentsServlet extends HttpServlet {
 			htmlResposne += "<h2>Here are ";
 			htmlResposne += request.getParameter("filter").toLowerCase();
 			htmlResposne += " reimbursement requests.</h2>"; 
-			htmlResposne += "<table>";
 			
+			
+			htmlResposne += "<table>";
 			htmlResposne += "<thead>";
 			htmlResposne += "<tr>";
+			htmlResposne += "<th>Ticket Id</th>";
 			htmlResposne += "<th>Employee Email</th>";
 			htmlResposne += "<th>Amount</th>";
 			htmlResposne += "<th>Type</th>";
@@ -114,6 +115,9 @@ public class showReimbursmentsServlet extends HttpServlet {
 				
 				htmlResposne += "<tr>";
 				htmlResposne += "<td>";
+				htmlResposne += previousReimbursements.get(i).getId();
+				htmlResposne += "</td>";
+				htmlResposne += "<td>";
 				htmlResposne += previousReimbursements.get(i).getEmployeeId();
 				htmlResposne += "</td>";
 				htmlResposne += "<td>";
@@ -122,9 +126,19 @@ public class showReimbursmentsServlet extends HttpServlet {
 				htmlResposne += "<td>";
 				htmlResposne += previousReimbursements.get(i).getType();
 				htmlResposne += "</td>";
-				htmlResposne += "<td>";
-				htmlResposne += previousReimbursements.get(i).getStatus();
-				htmlResposne += "</td>";
+				if(previousReimbursements.get(i).getStatus().equals("pending")) {
+					htmlResposne += "<td>";
+					htmlResposne += "<select id=\"select\" onchange=\"getValue(this)\">\r\n"
+							+ "		              <option value=\"$\">--Please Select--</option>\r\n"
+							+ "		              <option value=\"approved\">Approve it</option>\r\n"
+							+ "		              <option value=\"denied\">Deny it</option>\r\n"
+							+ "		            </select>";
+					htmlResposne += "</td>";
+				} else {
+					htmlResposne += "<td>";
+					htmlResposne += previousReimbursements.get(i).getStatus();
+					htmlResposne += "</td>";
+				}
 				htmlResposne += "<td>";
 				htmlResposne += previousReimbursements.get(i).getSubmissionDate();
 				htmlResposne += "</td>";
