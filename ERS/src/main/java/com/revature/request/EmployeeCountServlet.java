@@ -33,7 +33,7 @@ public class EmployeeCountServlet extends HttpServlet {
 			//EmployeeController employeeController = new EmployeeControllerImpl();
 			response.setContentType("text/html");
 			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write((Integer) data);
+			response.getWriter().print((Integer) data);
 		}
 		else response.sendError(401);
 	}

@@ -26,6 +26,6 @@ public interface EmployeeController {
 	
 	public ClientMessage submitReimbursement(HttpServletRequest request);
 	public List<Reimbursment> showEmployeeReimbursements(HttpServletRequest request);
-	public int getEmployeeCount(HttpServletRequest request);
+	public int getEmployeeCount();
 	
 }

@@ -110,4 +110,20 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		return false;
 	}
 	
+	@Override
+	public List<Reimbursment> getClaim() {
+		Connection connection = null;
+		List<Reimbursment> reimbursments = new ArrayList<>();
+		try {
+			connection = ConnectionUtil.getConnection();
+			String command = "SELECT * FROM reimbursments";
+			PreparedStatement statement = connection.prepareStatement(command);
+			ResultSet result = statement.executeQuery();
+			return reimbursments;
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Issues with getting reimbursment.");
+			return new ArrayList<>();
+		}
+	}
+	
 }

@@ -184,11 +184,9 @@ public class EmployeeControllerImpl implements EmployeeController{
 		}
 
 		@Override
-		public int getEmployeeCount(HttpServletRequest request) {
-			List<Reimbursment> employeeReimbursmentList = EmployeeServiceImpl.getInstance().showMyPreviousReimbursments(request.getParameter("username"));
-			
+		public int getEmployeeCount() {
 			logger.info("GET EMPLOYEE COUNT");
-			return employeeReimbursmentList.size();
+			return EmployeeServiceImpl.getInstance().getEmployeeCount();
 		}
 }
 

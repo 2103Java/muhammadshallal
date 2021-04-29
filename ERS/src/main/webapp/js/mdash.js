@@ -9,8 +9,7 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this);
-                document.getElementById("empCount").innerHTML = this.responseText;
+                document.getElementById("empCount").innerHTML = ":" + this.responseText;
             }
         };
         xhttp.open("GET", "http://localhost:8080/ERS/get/employee/count", true);
@@ -21,7 +20,7 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("claimCount").innerHTML = this.responseText;
+                document.getElementById("claimCount").innerHTML = ":" + this.responseText;
             }
         };
         xhttp.open("GET", "http://localhost:8080/ERS/get/claim/count", true);

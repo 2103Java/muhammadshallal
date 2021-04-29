@@ -35,11 +35,11 @@ public class AuthServlet extends HttpServlet {
 			String empId = httpSession.getId();
 			if (employee.getIsManager()) {
 				response.addCookie(new Cookie("empId", empId+"m"));
-				response.sendRedirect("mdash.html");
+				response.sendRedirect("html/mdash.html");
 			}
 			else {
 				response.addCookie(new Cookie("empId", empId+"e"));
-				response.sendRedirect("edash.html");
+				response.sendRedirect("html/edash.html");
 			}
 		}
 	}	
