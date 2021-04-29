@@ -56,5 +56,36 @@
     <servlet-name>submitReimbursementServlet</servlet-name>
     <url-pattern>/submitReimbursementServlet</url-pattern>
   </servlet-mapping>
- 
+  <servlet>
+    <servlet-name>showReimbursmentsServlet</servlet-name>
+    <servlet-class>com.revature.request.showReimbursmentsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>showReimbursmentsServlet</servlet-name>
+    <url-pattern>/showReimbursmentsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <servlet-class>com.revature.request.EmployeeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <url-pattern>/EmployeeServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>FinanceManagerServlet</servlet-name>
+    <servlet-class>com.revature.request.FinanceManagerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FinanceManagerServlet</servlet-name>
+    <url-pattern>/FinanceManagerServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.revature.request.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

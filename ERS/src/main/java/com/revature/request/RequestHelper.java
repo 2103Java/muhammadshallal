@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.revature.ajax.ClientMessage;
 import com.revature.controller.EmployeeControllerImpl;
-import com.revature.controller.FinancialManagerController;
 import com.revature.controller.FinancialManagerControllerImpl;
 
 public class RequestHelper {
@@ -16,18 +15,12 @@ public class RequestHelper {
 		switch(whatToDo) {
 			case "unregisterEmployee":
 				return EmployeeControllerImpl.getInstance().unregister(username);
-			case "viewAllEmployees":
-				return EmployeeControllerImpl.getInstance().viewAllEmployees();
-			case "logout":
-				return EmployeeControllerImpl.getInstance().logout(username, password);
-			
 			default:
 				return new ClientMessage("not-implemented yes");
 		}
 	}
 	
 	public static Object process(HttpServletRequest request) {
-		FinancialManagerController financialManagerController = new FinancialManagerControllerImpl();
 		switch(request.getRequestURI()) {
 			case "/ERS/auth":
 				return EmployeeControllerImpl.getInstance().login(request);		
@@ -36,12 +29,15 @@ public class RequestHelper {
 			case "/ERS/get/employee/count":
 				return EmployeeControllerImpl.getInstance().getEmployeeCount();
 			case "/ERS/get/claim/count":
-				return financialManagerController.getClaimCount();
+				return FinancialManagerControllerImpl.getInstance().getClaimCount();
+			case "/ERS/LogoutServlet":
+				return EmployeeControllerImpl.getInstance().logout(request);
 			case "/ERS/submitReimbursementServlet":
 				return EmployeeControllerImpl.getInstance().submitReimbursement(request);
 			case "/ERS/showEmployeeReimbursmentsServlet":
 				return EmployeeControllerImpl.getInstance().showEmployeeReimbursements(request);
-			
+			case "/ERS/showReimbursmentsServlet":
+				return FinancialManagerControllerImpl.getInstance().showReimbursements(request);
 
 			default:
 				return new ClientMessage("not-implemented yes");

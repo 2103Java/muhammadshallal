@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,16 +30,10 @@ public class AuthServlet extends HttpServlet {
 		else {
 			Employee employee = ((Employee) data);
 			HttpSession httpSession = request.getSession();
-			httpSession.setAttribute("employee", employee);
-			String empId = httpSession.getId();
-			if (employee.getIsManager()) {
-				response.addCookie(new Cookie("empId", empId+"m"));
-				response.sendRedirect("html/mdash.html");
-			}
-			else {
-				response.addCookie(new Cookie("empId", empId+"e"));
-				response.sendRedirect("html/edash.html");
-			}
+			httpSession.setAttribute("employeeId", employee.getEmail());
+			if (employee.getIsManager())
+				response.sendRedirect("/ERS/FinanceManagerServlet");
+			else response.sendRedirect("/ERS/EmployeeServlet");
 		}
 	}	
 }

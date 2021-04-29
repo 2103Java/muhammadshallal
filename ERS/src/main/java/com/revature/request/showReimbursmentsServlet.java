@@ -15,29 +15,29 @@ import javax.servlet.http.HttpSession;
 import com.revature.ajax.ClientMessage;
 import com.revature.model.Reimbursment;
 
-@WebServlet("/ERS/showEmployeeReimbursmentsServlet")
-public class showEmployeeReimbursmentsServlet extends HttpServlet {
+@WebServlet("/ERS/showReimbursmentsServlet")
+public class showReimbursmentsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public showEmployeeReimbursmentsServlet() {
+    public showReimbursmentsServlet() {
         super();
     }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{		
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession httpSession = request.getSession(false);
+		String id = (String) httpSession.getAttribute("employeeId");
+		System.out.println("id from session in doGet showReimbursmentsServlet:" + id);
+		
 		// get response writer
 		PrintWriter writer = response.getWriter();
 		String htmlResposne = "";
-		
-		//Add your html
 		htmlResposne += "<html>\r\n"
 				+ "<head>\r\n"
 				+ "	<meta charset=\"ISO-8859-1\">\r\n"
 				+ "	<title>Previous reimbursements</title>\r\n"
 				+ "</head>\r\n"
 				+ "<body>\r\n"
-				+ "	<form action=\"/ERS/showEmployeeReimbursmentsServlet\" method=\"post\" name=\"submissionForm\">\r\n"
-				+ "			<br>\r\n"
-				+ "			<br>\r\n"
+				+ "	<form action=\"/ERS/showReimbursmentsServlet\" method=\"post\" name=\"submissionForm\">\r\n"
 				+ "			\r\n"
 				+ "			<br>\r\n"
 				+ "			<br>\r\n"
@@ -67,14 +67,17 @@ public class showEmployeeReimbursmentsServlet extends HttpServlet {
 				+ "     <a href=\"/ERS/LogoutServlet\">Logout</a>\r\n"
 				+ "</body>\r\n"
 				+ "</html>";
+				
 		
+				
 		//pass your response back
-		writer.println(htmlResposne);		
+		writer.println(htmlResposne);
     }
-    
-    
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		HttpSession httpSession = request.getSession(false);
+		String id = (String) httpSession.getAttribute("employeeId");
+		System.out.println("id from session in doPost showReimbursmentsServlet:" + id);
 		//Pass request to controller
 		Object fromController =  RequestHelper.process(request);
 		List<Reimbursment> previousReimbursements = (List<Reimbursment>) fromController;
@@ -86,17 +89,18 @@ public class showEmployeeReimbursmentsServlet extends HttpServlet {
 		if(previousReimbursements.size() == 0) {
 			// build HTML code
 	        htmlResposne += "<html>";
-	        htmlResposne += "<h2>You don't have any previous reimbursement requests.</h2>";    
+	        htmlResposne += "<h2>There are no reimbursement requests.</h2>";    
 	        htmlResposne += "</html>";
 		} else {
 			htmlResposne += "<html>";
-			htmlResposne += "<h2>Here are your previous and ";
+			htmlResposne += "<h2>Here are ";
 			htmlResposne += request.getParameter("filter").toLowerCase();
 			htmlResposne += " reimbursement requests.</h2>"; 
 			htmlResposne += "<table>";
 			
 			htmlResposne += "<thead>";
 			htmlResposne += "<tr>";
+			htmlResposne += "<th>Employee Email</th>";
 			htmlResposne += "<th>Amount</th>";
 			htmlResposne += "<th>Type</th>";
 			htmlResposne += "<th>Status</th>";
@@ -109,6 +113,9 @@ public class showEmployeeReimbursmentsServlet extends HttpServlet {
 			for(int i = 0; i < previousReimbursements.size(); i++) {
 				
 				htmlResposne += "<tr>";
+				htmlResposne += "<td>";
+				htmlResposne += previousReimbursements.get(i).getEmployeeId();
+				htmlResposne += "</td>";
 				htmlResposne += "<td>";
 				htmlResposne += previousReimbursements.get(i).getAmount();
 				htmlResposne += "</td>";

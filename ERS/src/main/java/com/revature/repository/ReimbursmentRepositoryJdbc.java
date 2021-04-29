@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import com.revature.model.Reimbursment;
 import com.revature.util.ConnectionUtil;
@@ -24,11 +27,42 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		
 		return reimbursmentRepository;
 	}
+	
+	//configure logger
+	static final Logger logger = Logger.getLogger(ReimbursmentRepositoryJdbc.class);
 
 	@Override
 	public List<Reimbursment> selectAllReimbursments() {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+					
+			String command = "SELECT * FROM reimbursments";
+			PreparedStatement statement = connection.prepareStatement(command);
+			
+			ResultSet result = statement.executeQuery();
+
+			List<Reimbursment> reimbursmentList = new ArrayList<>();
+			while(result.next()) {
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
+						  result.getString("description"));
+				reimbursmentList.add(reimbursment);
+			}
+			logger.info("ALL REIMBURSEMENTS ARE SELECTED");
+			return reimbursmentList;
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.debug("ISSUES WITH SELECTING ALL REIMBURSEMENTS");
+			e.printStackTrace();
+		} 
+		
+		logger.info("EMPTY REIMBURSEMENTS TABLE");
+		return new ArrayList<>();
 	}
 	
 	@Override
@@ -48,30 +82,173 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 
 			List<Reimbursment> reimbursmentList = new ArrayList<>();
 			while(result.next()) {
-				reimbursmentList.add(new Reimbursment(result.getString("employeeId"), 
-											  result.getDouble("amount"),
-											  result.getString("typeof"),
-											  result.getString("description")));
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
+						  result.getString("description"));
+				reimbursmentList.add(reimbursment);
 			}
+			logger.info("REIMBURSEMENTS OF EMPLOYEE WITH THIS USERNAME: " + employeeId.toUpperCase() + ", WERE FOUND IN RDS");
+			return reimbursmentList;
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF EMPLOYEE WITH THIS USERNAME: " + employeeId.toUpperCase() + ", IN RDS");
+			e.printStackTrace();
+		} 
+		logger.info("NO REIMBURSEMENTS FOR EMPLOYEE WITH THIS USERNAME: " + employeeId.toUpperCase() + ", WERE FOUND IN RDS");
+		return new ArrayList<>();
+	}
+    
+	@Override
+	public List<Reimbursment> selectByType(String type) {
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+					
+			int statementIndex = 0;
+			String command = "SELECT * FROM reimbursments WHERE typeof=?";
+			PreparedStatement statement = connection.prepareStatement(command);
+
+			//Set attributes to be inserted
+			statement.setString(++statementIndex, type);
+			
+			ResultSet result = statement.executeQuery();
+
+			List<Reimbursment> reimbursmentList = new ArrayList<>();
+			while(result.next()) {
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
+						  result.getString("description"));
+				reimbursmentList.add(reimbursment);
+			}
+			logger.info("REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + ", WERE FOUND IN RDS");
 
 			return reimbursmentList;
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with selecting all employees.");
+			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + ", IN RDS");
 			e.printStackTrace();
 		} 
+		
+		logger.info("NO REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + ", WERE FOUND IN RDS");
 		return new ArrayList<>();
 	}
 
 	@Override
-	public List<Reimbursment> selectByType(String type) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Reimbursment> selectByStatus(String status) {
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+					
+			int statementIndex = 0;
+			String command = "SELECT * FROM reimbursments WHERE status=?";
+			PreparedStatement statement = connection.prepareStatement(command);
+
+			//Set attributes to be inserted
+			statement.setString(++statementIndex, status);
+			
+			ResultSet result = statement.executeQuery();
+
+			List<Reimbursment> reimbursmentList = new ArrayList<>();
+			while(result.next()) {
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
+						  result.getString("description"));
+				reimbursmentList.add(reimbursment);
+			}
+			logger.info("REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + ", WERE FOUND IN RDS");
+			return reimbursmentList;
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + ", IN RDS");
+			e.printStackTrace();
+		} 
+		logger.info("NO REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + ", WERE FOUND IN RDS");
+		return new ArrayList<>();
+	}
+	
+	
+	@Override
+	public List<Reimbursment> selectByEmployeeType(String employeeId, String type) {
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+					
+			int statementIndex = 0;
+			String command = "SELECT * FROM reimbursments WHERE employeeId=? AND typeof=?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setString(++statementIndex, employeeId.toLowerCase());
+			statement.setString(++statementIndex, type);
+			ResultSet result = statement.executeQuery();
+
+			List<Reimbursment> reimbursmentList = new ArrayList<>();
+			while(result.next()) {
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
+						  result.getString("description"));
+				reimbursmentList.add(reimbursment);
+				}
+			logger.info("REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
+			return reimbursmentList;
+				
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.debug("ISSUES FINDING REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", IN RDS");
+			e.printStackTrace();
+		} 
+		logger.info("NO REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
+		return new ArrayList<>();
 	}
 
 	@Override
-	public List<Reimbursment> selectByStatus(String status) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Reimbursment> selectByEmployeeStatus(String employeeId, String status) {
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+					
+			int statementIndex = 0;
+			String command = "SELECT * FROM reimbursments WHERE employeeId=? AND status=?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setString(++statementIndex, employeeId.toLowerCase());
+			statement.setString(++statementIndex, status);
+			ResultSet result = statement.executeQuery();
+
+			List<Reimbursment> reimbursmentList = new ArrayList<>();
+			while(result.next()) {
+				Reimbursment reimbursment = new Reimbursment(
+						result.getString("id"),
+						result.getString("employeeId"), 
+						  result.getDouble("amount"),
+						  result.getString("typeof"),
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
+						  result.getString("description"));
+				reimbursmentList.add(reimbursment);
+				}
+			logger.info("REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
+			return reimbursmentList;
+				
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.debug("ISSUES FINDING REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", IN RDS");
+			e.printStackTrace();
+		} 
+		logger.info("NO REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -94,21 +271,47 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 			
 			
 			if(statement.executeUpdate() > 0) {
+				logger.info("A REIMBURSEMENT IS INSERTED TO THE RDS");
 				return true;
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with inserting a reimbursment.");
+			logger.debug("ISSUES WITH INSERTING A REIMBURSEMENT");
 			e.printStackTrace();
 		}
+		logger.debug("ISSUES WITH INSERTING A REIMBURSEMENT NON EXCEPTION");
 		return false;
 	}
 
+
 	@Override
 	public boolean delete(String reimbursmentId) {
-		// TODO Auto-generated method stub
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			
+			int statementIndex = 0;
+			String command = "DELETE FROM reimbursments WHERE id=?";
+			
+			PreparedStatement statement = connection.prepareStatement(command);
+
+			//Set attributes to be inserted
+			statement.setString(++statementIndex, reimbursmentId);
+			
+			if(statement.executeUpdate() > 0) {
+				logger.info("A REIMBURSEMENT IS DELETED FROM THE RDS");
+				return true;
+			}
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.debug("ISSUES WITH DELETING A REIMBURSEMENT");
+			e.printStackTrace();
+		}
+		logger.debug("ISSUES WITH DELETING A REIMBURSEMENT NON EXCEPTION");
 		return false;
 	}
+
+	
 	
 	@Override
 	public List<Reimbursment> getClaim() {

@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
@@ -107,66 +108,50 @@ public class EmployeeControllerImpl implements EmployeeController{
 			}
 		}
 
+		//We logout upstream at the controller level by invoking request.getSession().invalidate();
 		@Override
-		public ClientMessage viewAllEmployees() {
-			List<Employee> employeeList = EmployeeServiceImpl.getInstance().listEmployees();
+		public ClientMessage logout(HttpServletRequest request) {
+			HttpSession httpSession = request.getSession(false);
+			String id = (String) httpSession.getAttribute("employeeId");	
+			httpSession.invalidate();
+			logger.info("AN EMPLOYEE WITH THIS USERNAME: " + id + ", JUST LOGGEDOUT");
+			return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME ALREADY LOGGEDOUT");
 			
-			logger.info("LIST OF ALL EMPLOYEES IS VIEWED");
-			//view employeeList, but for the time being, just print them in console
-			for(Employee employee : employeeList) {
-				System.out.println(employee.toString());
-			}
-			
-			return new ClientMessage("LIST OF ALL EMPLOYEES IS VIEWED");
-		}
-
-
-		@Override
-		public ClientMessage logout(String email, String password) {
-			// request.getSession().invalidate();
-			if(EmployeeServiceImpl.getInstance().logout(email, password) == true) {
-				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + email + ", JUST LOGGEDOUT");
-				return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME ALREADY LOGGEDOUT");
-			} else {
-				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + email + ", UNABLE TO LOGOUT");
-				return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME UNABLE TO LOGOUT");
-			}
 		}
 
 		@Override
 		public ClientMessage submitReimbursement(HttpServletRequest request) {
+			HttpSession httpSession = request.getSession(false);
+			String id = (String) httpSession.getAttribute("employeeId");	
 			
-			Reimbursment reimbursment =  new Reimbursment(request.getParameter("username"), 
-					                                      Double.parseDouble(request.getParameter("Amount")), 
-					                                      request.getParameter("Category"),
-					                                      request.getParameter("Description"));
-			
+			Reimbursment reimbursment =  new Reimbursment(id, 
+                    Double.parseDouble(request.getParameter("Amount")), 
+                    request.getParameter("category"),
+                    request.getParameter("Description"));
+
 			// https://happycoding.io/tutorials/java-server/uploading-files
 			//Handle uploaded receipts by copying the InputStream into the receipts directory
 			try {
-				Part filePart = request.getPart("fileselect");
-				
-				System.out.println(filePart.getName());
-				System.out.println(filePart.getContentType());
-				System.out.println(filePart.getSubmittedFileName());
-				System.out.println(filePart.getSize());
-				
-				InputStream fileContent = filePart.getInputStream();
-				OutputStream fileOutput = new FileOutputStream(reimbursment.getImagePath().toString());
-				fileOutput.write(fileContent.read());
- 				fileContent.close();
- 				fileOutput.close();
- 				
+			Part filePart = request.getPart("fileselect");
+			
+			System.out.println(filePart.getName());
+			System.out.println(filePart.getContentType());
+			System.out.println(filePart.getSubmittedFileName());
+			System.out.println(filePart.getSize());
+			
+			InputStream fileContent = filePart.getInputStream();
+			OutputStream fileOutput = new FileOutputStream(reimbursment.getImagePath().toString());
+			fileOutput.write(fileContent.read());
+			fileContent.close();
+			fileOutput.close();
+			
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ServletException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} // Retrieves <input type="file" name="fileselect">
-			
-			
-			if (EmployeeServiceImpl.getInstance().submitReimbursment(reimbursment)) {
+			boolean submissionResult = EmployeeServiceImpl.getInstance().submitReimbursment(reimbursment);
+			if (submissionResult == true) {
 				logger.info("REIMBURSEMENET SUBMISSION SUCCESSFUL: " + reimbursment.getId() + " BY " + reimbursment.getEmployeeId());
 				return new ClientMessage("REIMBURSEMENET SUBMISSION SUCCESSFUL");
 			} else {
@@ -177,13 +162,15 @@ public class EmployeeControllerImpl implements EmployeeController{
 		
 		@Override
 		public List<Reimbursment> showEmployeeReimbursements(HttpServletRequest request) {
-			List<Reimbursment> employeeReimbursmentList = EmployeeServiceImpl.getInstance().showMyPreviousReimbursments(request.getParameter("username"));
+			HttpSession httpSession = request.getSession(false);
+			String id = (String) httpSession.getAttribute("employeeId");
+
+			List<Reimbursment> employeeReimbursmentList = EmployeeServiceImpl.getInstance().showMyPreviousReimbursments(id, request.getParameter("filter"));
 			
 			logger.info("LIST OF EMPLOYEE PREVIOUS REIMBURSEMENETS IS VIEWED");
 			return employeeReimbursmentList;
 		}
 
-		@Override
 		public int getEmployeeCount() {
 			logger.info("GET EMPLOYEE COUNT");
 			return EmployeeServiceImpl.getInstance().getEmployeeCount();
