@@ -72,4 +72,14 @@
     <servlet-name>AuthServlet</servlet-name>
     <url-pattern>/AuthServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FinanceManagerApproveDeny</display-name>
+    <servlet-name>FinanceManagerApproveDeny</servlet-name>
+    <servlet-class>com.revature.request.FinanceManagerApproveDeny</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FinanceManagerApproveDeny</servlet-name>
+    <url-pattern>/FinanceManagerApproveDeny</url-pattern>
+  </servlet-mapping>
 </web-app>

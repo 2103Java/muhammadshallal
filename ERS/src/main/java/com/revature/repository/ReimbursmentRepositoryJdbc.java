@@ -59,10 +59,8 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES WITH SELECTING ALL REIMBURSEMENTS");
 			e.printStackTrace();
+			return new ArrayList<>();
 		} 
-		
-		logger.info("EMPTY REIMBURSEMENTS TABLE");
-		return new ArrayList<>();
 	}
 	
 	@Override
@@ -97,9 +95,8 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF EMPLOYEE WITH THIS USERNAME: " + employeeId.toUpperCase() + ", IN RDS");
 			e.printStackTrace();
+			return new ArrayList<>();
 		} 
-		logger.info("NO REIMBURSEMENTS FOR EMPLOYEE WITH THIS USERNAME: " + employeeId.toUpperCase() + ", WERE FOUND IN RDS");
-		return new ArrayList<>();
 	}
     
 	@Override
@@ -135,10 +132,8 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + ", IN RDS");
 			e.printStackTrace();
+			return new ArrayList<>();
 		} 
-		
-		logger.info("NO REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + ", WERE FOUND IN RDS");
-		return new ArrayList<>();
 	}
 
 	@Override
@@ -173,9 +168,8 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + ", IN RDS");
 			e.printStackTrace();
+			return new ArrayList<>();
 		} 
-		logger.info("NO REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + ", WERE FOUND IN RDS");
-		return new ArrayList<>();
 	}
 	
 	
@@ -210,9 +204,8 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES FINDING REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", IN RDS");
 			e.printStackTrace();
+			return new ArrayList<>();
 		} 
-		logger.info("NO REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
-		return new ArrayList<>();
 	}
 
 	@Override
@@ -246,9 +239,8 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES FINDING REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", IN RDS");
 			e.printStackTrace();
+			return new ArrayList<>();
 		} 
-		logger.info("NO REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
-		return new ArrayList<>();
 	}
 
 	@Override
@@ -278,6 +270,7 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES WITH INSERTING A REIMBURSEMENT");
 			e.printStackTrace();
+			return false;
 		}
 		logger.debug("ISSUES WITH INSERTING A REIMBURSEMENT NON EXCEPTION");
 		return false;
@@ -306,8 +299,38 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES WITH DELETING A REIMBURSEMENT");
 			e.printStackTrace();
+			return false;
 		}
 		logger.debug("ISSUES WITH DELETING A REIMBURSEMENT NON EXCEPTION");
+		return false;
+	}
+
+	@Override
+	public boolean updateStatus(String id, String newStatus) {
+		System.out.println("id from repo: " + id);
+		System.out.println("newStatus from repo: " + newStatus);
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			int statementIndex = 0;
+			String command = "UPDATE reimbursments SET status=? WHERE id=?";
+			
+			PreparedStatement statement;
+			statement = connection.prepareStatement(command);
+			statement.setString(++statementIndex, newStatus);
+			statement.setString(++statementIndex, id);	
+			
+			if(statement.executeUpdate() > 0) {
+				logger.info("THE STATUS OF A REIMBURSEMENT IS UPDATED IN THE RDS");
+				return true;
+			}
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.debug("ISSUES WITH UPDATING THE STATUS OF A REIMBURSEMENT");
+			e.printStackTrace();
+			return false;
+		}
+		logger.debug("ISSUES WITH UPDATING THE STATUS OF A REIMBURSEMENT NON EXCEPTION");
 		return false;
 	}
 

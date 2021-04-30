@@ -23,6 +23,6 @@ public interface ReimbursmentRepository {
 	// Do we want to include updates to the reimbursement requests?
 //	public boolean updateAmount(String id, Double newAmount); //NIY
 //	public boolean updateType(String id, String newType); //NIY
-//	public boolean updateStatus(String id, String newStatus); //NIY
+	public boolean updateStatus(String id, String newStatus);
 //	public boolean updateDescription(String id, String newDescription); //NIY
 }

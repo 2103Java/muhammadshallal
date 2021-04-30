@@ -9,4 +9,5 @@ import com.revature.model.Reimbursment;
 public interface FinancialManagerController {
 	public int getEmployeeCount();
 	public List<Reimbursment> showReimbursements(HttpServletRequest request);
+	public boolean modifyStatus(HttpServletRequest request);
 }

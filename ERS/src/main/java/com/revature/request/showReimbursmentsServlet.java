@@ -2,7 +2,6 @@ package com.revature.request;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.revature.ajax.ClientMessage;
 import com.revature.model.Reimbursment;
 
 @WebServlet("/ERS/showReimbursmentsServlet")
@@ -29,8 +27,8 @@ public class showReimbursmentsServlet extends HttpServlet {
 		
 		// get response writer
 		PrintWriter writer = response.getWriter();
-		String htmlResposne = "";
-		htmlResposne += "<html>\r\n"
+		String htmlResponse = "";
+		htmlResponse += "<html>\r\n"
 				+ "<head>\r\n"
 				+ "	<meta charset=\"ISO-8859-1\">\r\n"
 				+ "	<title>Previous reimbursements</title>\r\n"
@@ -70,90 +68,95 @@ public class showReimbursmentsServlet extends HttpServlet {
 		
 				
 		//pass your response back
-		writer.println(htmlResposne);
+		writer.println(htmlResponse);
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession httpSession = request.getSession(false);
-		String id = (String) httpSession.getAttribute("employeeId");
-		
+		System.out.println("Original filter from doPost in showReimbursmentsServlet" + request.getParameter("filter"));		
 		//Pass request to controller
 		Object fromController =  RequestHelper.process(request);
 		List<Reimbursment> previousReimbursements = (List<Reimbursment>) fromController;
 		
 		// get response writer
 		PrintWriter writer = response.getWriter();
-		String htmlResposne = "";
+		String htmlResponse = "";
 		
 		if(previousReimbursements.size() == 0) {
 			// build HTML code
-	        htmlResposne += "<html>";
-	        htmlResposne += "<h2>There are no reimbursement requests.</h2>";    
-	        htmlResposne += "</html>";
+	        htmlResponse += "<html>";
+	        htmlResponse += "<h2>There are no reimbursement requests.</h2>";    
+	        htmlResponse += "</html>";
 		} else {
-			htmlResposne += "<html>";
-			htmlResposne += "<h2>Here are ";
-			htmlResposne += request.getParameter("filter").toLowerCase();
-			htmlResposne += " reimbursement requests.</h2>"; 
+			htmlResponse += "<html>";
+			htmlResponse += "<h2>Here are ";
+			htmlResponse += request.getParameter("filter").toLowerCase();
+			htmlResponse += " reimbursement requests.</h2>"; 
 			
 			
-			htmlResposne += "<table>";
-			htmlResposne += "<thead>";
-			htmlResposne += "<tr>";
-			htmlResposne += "<th>Ticket Id</th>";
-			htmlResposne += "<th>Employee Email</th>";
-			htmlResposne += "<th>Amount</th>";
-			htmlResposne += "<th>Type</th>";
-			htmlResposne += "<th>Status</th>";
-			htmlResposne += "<th>Submission date</th>";
-			htmlResposne += "<th>Description</th>";
-			htmlResposne += "</tr>";
-			htmlResposne += "</thead>";
+			htmlResponse += "<table>";
+			htmlResponse += "<thead>";
+			htmlResponse += "<tr>";
+			htmlResponse += "<th>Ticket Id</th>";
+			htmlResponse += "<th>Employee Email</th>";
+			htmlResponse += "<th>Amount</th>";
+			htmlResponse += "<th>Type</th>";
+			htmlResponse += "<th>Status</th>";
+			htmlResponse += "<th>Submission date</th>";
+			htmlResponse += "<th>Description</th>";
+			htmlResponse += "</tr>";
+			htmlResponse += "</thead>";
 			
-			htmlResposne += "<tbody>";
+			htmlResponse += "<tbody>";
 			for(int i = 0; i < previousReimbursements.size(); i++) {
 				
-				htmlResposne += "<tr>";
-				htmlResposne += "<td>";
-				htmlResposne += previousReimbursements.get(i).getId();
-				htmlResposne += "</td>";
-				htmlResposne += "<td>";
-				htmlResposne += previousReimbursements.get(i).getEmployeeId();
-				htmlResposne += "</td>";
-				htmlResposne += "<td>";
-				htmlResposne += previousReimbursements.get(i).getAmount();
-				htmlResposne += "</td>";
-				htmlResposne += "<td>";
-				htmlResposne += previousReimbursements.get(i).getType();
-				htmlResposne += "</td>";
+				htmlResponse += "<tr>";
+				htmlResponse += "<td>";
+				htmlResponse += previousReimbursements.get(i).getId();
+				htmlResponse += "</td>";
+				htmlResponse += "<td>";
+				htmlResponse += previousReimbursements.get(i).getEmployeeId();
+				htmlResponse += "</td>";
+				htmlResponse += "<td>";
+				htmlResponse += previousReimbursements.get(i).getAmount();
+				htmlResponse += "</td>";
+				htmlResponse += "<td>";
+				htmlResponse += previousReimbursements.get(i).getType();
+				htmlResponse += "</td>";
 				if(previousReimbursements.get(i).getStatus().equals("pending")) {
-					htmlResposne += "<td>";
-					htmlResposne += "<select id=\"select\" onchange=\"getValue(this)\">\r\n"
-							+ "		              <option value=\"$\">--Please Select--</option>\r\n"
+					htmlResponse += "<td>";
+					htmlResponse += "<form method=\"post\" action=\"/ERS/FinanceManagerApproveDeny\" name=\"fmdecision\">";
+					htmlResponse += "<select name=\"selection\" onchange=\"getValue(this)\">\r\n"
+							+ "		              <option value=\"pending\">Keep it for now</option>\r\n"
 							+ "		              <option value=\"approved\">Approve it</option>\r\n"
 							+ "		              <option value=\"denied\">Deny it</option>\r\n"
 							+ "		            </select>";
-					htmlResposne += "</td>";
+					htmlResponse += "<input type=\"hidden\" id=\"ticketId\" name=\"ticketId\" value=";
+					htmlResponse += previousReimbursements.get(i).getId();
+					htmlResponse += ">";
+					htmlResponse += "<button type=\"submit\" form=\"fmdecision\">change status</button>";
+					
+					htmlResponse += "</form>";
+					htmlResponse += "</td>";
 				} else {
-					htmlResposne += "<td>";
-					htmlResposne += previousReimbursements.get(i).getStatus();
-					htmlResposne += "</td>";
+					htmlResponse += "<td>";
+					htmlResponse += previousReimbursements.get(i).getStatus();
+					htmlResponse += "</td>";
 				}
-				htmlResposne += "<td>";
-				htmlResposne += previousReimbursements.get(i).getSubmissionDate();
-				htmlResposne += "</td>";
-				htmlResposne += "<td>";
-				htmlResposne += previousReimbursements.get(i).getDescription();
-				htmlResposne += "</td>";
-				htmlResposne += "</tr>";
+				htmlResponse += "<td>";
+				htmlResponse += previousReimbursements.get(i).getSubmissionDate();
+				htmlResponse += "</td>";
+				htmlResponse += "<td>";
+				htmlResponse += previousReimbursements.get(i).getDescription();
+				htmlResponse += "</td>";
+				htmlResponse += "</tr>";
 			}
-			htmlResposne += "</tbody>";
-			htmlResposne += "</table>";
-			htmlResposne += "</html>";
+			htmlResponse += "</tbody>";
+			htmlResponse += "</table>";
+			htmlResponse += "</html>";
 		}
 		
 		//pass your response back
-		writer.println(htmlResposne);
+		writer.println(htmlResponse);
 	}
 
 }

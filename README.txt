@@ -9,7 +9,7 @@ Major dones:
 ease of navigation
 
 Priorities:
-1) Allow finance managers to modify the status of a pending ticket
+1) Allow finance managers to modify the status of a pending ticket, this is working progress and I am having some bugs
 2) fix fileupload of receipt images
 3) Front end needs serious focus
 

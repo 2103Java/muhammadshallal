@@ -36,6 +36,8 @@ public class RequestHelper {
 				return EmployeeControllerImpl.getInstance().showEmployeeReimbursements(request);
 			case "/ERS/showReimbursmentsServlet":
 				return FinancialManagerControllerImpl.getInstance().showReimbursements(request);
+			case "/ERS/FinanceManagerApproveDeny":
+				return FinancialManagerControllerImpl.getInstance().modifyStatus(request);
 
 			default:
 				return new ClientMessage("not-implemented yes");

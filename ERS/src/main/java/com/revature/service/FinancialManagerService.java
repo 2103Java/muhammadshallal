@@ -11,4 +11,5 @@ public interface FinancialManagerService {
 	public List<Employee> listEmployees();
 	public ClientMessage viewAllEmployees();
 	public List<Reimbursment> showReimbursements(String filter);
+	public boolean modifyStatus(String id, String newStatus);
 }

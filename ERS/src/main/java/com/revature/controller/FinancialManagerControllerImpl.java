@@ -47,5 +47,17 @@ public class FinancialManagerControllerImpl implements FinancialManagerControlle
 		return reimbursmentList;
 		
 	}
+
+	@Override
+	public boolean modifyStatus(HttpServletRequest request) {
+		boolean modifyResult = FinancialManagerServiceImpl.getInstance().modifyStatus(request.getParameter("selection"), request.getParameter("ticketId"));
+		if(modifyResult == true) {
+			logger.info("FINANCIAL MANAGER UPDATED REIMBURSEMENT: " + request.getParameter("ticketId") + " to: " + request.getParameter("selection"));
+		} else {
+			logger.debug("FINANCIAL MANAGER COULD NOT UPDATE REIMBURSEMENT: " + request.getParameter("ticketId") + " to: " + request.getParameter("selection"));
+		}
+		return modifyResult;
+	
+	}
 	
 }
