@@ -27,8 +27,8 @@ public class Reimbursment {
 		this.status = "pending"; //any reimbursement request starts as pending
 		this.submissionDate = LocalDate.now();
 		
-		//String cwd = Path.of("").toAbsolutePath().toString();
-		File fileToSave = new File(".\\receiptImages\\" + this.id);
+		String cwd = "C:\\Users\\12092\\Desktop\\revature\\ERS\\muhammadshallal\\ERS\\receiptImages\\";
+		File fileToSave = new File(cwd + this.id);
 		this.imagePath = fileToSave.toPath();
 
 	}
