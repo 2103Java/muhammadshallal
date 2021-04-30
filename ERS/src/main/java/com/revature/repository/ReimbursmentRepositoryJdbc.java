@@ -265,6 +265,9 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 			if(statement.executeUpdate() > 0) {
 				logger.info("A REIMBURSEMENT IS INSERTED TO THE RDS");
 				return true;
+			} else {
+				logger.debug("ISSUES WITH INSERTING A REIMBURSEMENT NON EXCEPTION");
+				return false;
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -272,8 +275,6 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 			e.printStackTrace();
 			return false;
 		}
-		logger.debug("ISSUES WITH INSERTING A REIMBURSEMENT NON EXCEPTION");
-		return false;
 	}
 
 
@@ -294,6 +295,9 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 			if(statement.executeUpdate() > 0) {
 				logger.info("A REIMBURSEMENT IS DELETED FROM THE RDS");
 				return true;
+			} else {
+				logger.debug("ISSUES WITH DELETING A REIMBURSEMENT NON EXCEPTION");
+				return false;
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -301,14 +305,11 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 			e.printStackTrace();
 			return false;
 		}
-		logger.debug("ISSUES WITH DELETING A REIMBURSEMENT NON EXCEPTION");
-		return false;
+		
 	}
 
 	@Override
 	public boolean updateStatus(String id, String newStatus) {
-		System.out.println("id from repo: " + id);
-		System.out.println("newStatus from repo: " + newStatus);
 		Connection connection = null;
 		try {
 			connection = ConnectionUtil.getConnection();
@@ -323,6 +324,9 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 			if(statement.executeUpdate() > 0) {
 				logger.info("THE STATUS OF A REIMBURSEMENT IS UPDATED IN THE RDS");
 				return true;
+			} else {
+				logger.debug("ISSUES WITH UPDATING THE STATUS OF A REIMBURSEMENT NON EXCEPTION");
+				return false;
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -330,8 +334,6 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 			e.printStackTrace();
 			return false;
 		}
-		logger.debug("ISSUES WITH UPDATING THE STATUS OF A REIMBURSEMENT NON EXCEPTION");
-		return false;
 	}
 
 	

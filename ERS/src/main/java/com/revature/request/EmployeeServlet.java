@@ -20,7 +20,9 @@ public class EmployeeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession httpSession = request.getSession(false);
-		String id = (String) httpSession.getAttribute("employeeId");
+		String curMessage = (String) httpSession.getAttribute("curMessage");
+		
+		
 		
 		// get response writer
 		PrintWriter writer = response.getWriter();
@@ -31,8 +33,17 @@ public class EmployeeServlet extends HttpServlet {
 				+ "		<meta charset=\"ISO-8859-1\">\r\n"
 				+ "		<title>Employee services</title>\r\n"
 				+ "	</head>\r\n"
-				+ "	<body>\r\n"
-				+ "		<a href=\"/ERS/submitReimbursementServlet\">Submit a reimbursement request</a>\r\n"
+				+ "	<body>\r\n";
+		
+		if(curMessage != null) {
+			htmlResposne += "<h3>"
+					+ curMessage
+					+ "</h3>"
+					+ "<br>"
+					+ "<br>";
+		}
+		
+		htmlResposne += "<a href=\"/ERS/submitReimbursementServlet\">Submit a reimbursement request</a>\r\n"
 				+ "		<br>\r\n"
 				+ "		<br>\r\n"
 				+ "		<a href=\"/ERS/showEmployeeReimbursmentsServlet\">Show my previous reimbursements</a>\r\n"

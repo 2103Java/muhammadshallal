@@ -86,7 +86,9 @@ public class showEmployeeReimbursmentsServlet extends HttpServlet {
 		if(previousReimbursements.size() == 0) {
 			// build HTML code
 	        htmlResposne += "<html>";
-	        htmlResposne += "<h2>You don't have any previous reimbursement requests.</h2>";    
+	        htmlResposne += "<h2>You don't have any previous "
+	        		+ request.getParameter("filter").toLowerCase()
+	        		+ " reimbursement requests.</h2>";    
 	        htmlResposne += "</html>";
 		} else {
 			htmlResposne += "<html>";

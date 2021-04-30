@@ -27,7 +27,7 @@ public class submitReimbursementServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession httpSession = request.getSession(false);
 		String id = (String) httpSession.getAttribute("employeeId");
-		System.out.println("id from session in doGet submitReimbursementServlet:" + id);
+		//System.out.println("id from session in doGet submitReimbursementServlet:" + id);
 		
 		// get response writer
 		PrintWriter writer = response.getWriter();
@@ -84,29 +84,21 @@ public class submitReimbursementServlet extends HttpServlet {
     }
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession httpSession = request.getSession(false);
 		
 		//Pass request to controller
 		Object data = RequestHelper.process(request);
-		
-		// get response writer
-		PrintWriter writer = response.getWriter();
-		String htmlRespone = "";
-		
+				
 		if(((ClientMessage) data).getMessage().equals("REIMBURSEMENET SUBMISSION SUCCESSFUL")) {
 			
-	        // build HTML code
-	        htmlRespone += "<html>";
-	        htmlRespone += "<h2>Your reimbursement request was successfully submitted. It is pending approval by a finance manager.</h2>";    
-	        htmlRespone += "</html>";
+			httpSession.setAttribute("curMessage", "Your reimbursement request was successfully submitted. It is pending approval by a finance manager.");
+	        response.sendRedirect("/ERS/EmployeeServlet");
 	        
 		} else if (((ClientMessage) data).getMessage().equals("REIMBURSEMENET SUBMISSION UNSUCCESSFUL")){
-			htmlRespone += "<html>";
-	        htmlRespone += "<h2>Your reimbursement request was unsuccessfully submitted.</h2>";    
-	        htmlRespone += "</html>";
+			httpSession.setAttribute("curMessage", "Your reimbursement request was unsuccessfully submitted.");
+	        response.sendRedirect("/ERS/EmployeeServlet");
 		}
 		
-		//pass your response back
-		writer.println(htmlRespone);
 	}
 
 }

@@ -20,7 +20,6 @@ public class FinanceManagerServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession httpSession = request.getSession(false);
-		String id = (String) httpSession.getAttribute("employeeId");
 		
 		// get response writer
 		PrintWriter writer = response.getWriter();
