@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.revature.ajax.ClientMessage;
 
-@WebServlet("/ERS/RegisterServlet")
+@WebServlet("/ERS/register")
 public class RegisterServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -95,24 +95,22 @@ public class RegisterServlet extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		String htmlRespone = "";
 		String controllerPosition = ((ClientMessage) data).getMessage();
-		if(controllerPosition.equals("EMAIL IS TAKEN")) {
-			htmlRespone += "<html>";
-	        htmlRespone += "<h2>This email is registered, please sign in.</h2>";    
-	        htmlRespone += "<a href=\"index.html\">Sign in</a>";
-	        htmlRespone += "</html>";
-		} else if (((ClientMessage) data).getMessage().equals("REGISTRATION SUCCESSFUL")) {
-			htmlRespone += "<html>";
-	        htmlRespone += "<h2>You are successfully registered.</h2>";    
-	        htmlRespone += "<a href=\"index.html\">Sign in</a>";
-	        htmlRespone += "</html>";
-		} else {
-			htmlRespone += "<html>";
-	        htmlRespone += "<h2>You registration was not successful, please contact human resources.</h2>";    
-	        htmlRespone += "<a href=\"index.html\">Sign in</a>";
-	        htmlRespone += "</html>";
+		if (((ClientMessage) data).getMessage().equals("REGISTRATION SUCCESSFUL"))
+			response.sendRedirect("html/login.html");
+		else {
+			if(controllerPosition.equals("EMAIL IS TAKEN")) {
+				htmlRespone += "<html>";
+		        htmlRespone += "<h2>This email is registered, please sign in.</h2>";
+		        htmlRespone += "<a href=\"index.html\">Sign in</a>";
+		        htmlRespone += "</html>";
+			} else {
+				htmlRespone += "<html>";
+		        htmlRespone += "<h2>You registration was not successful, please contact human resources.</h2>";    
+		        htmlRespone += "<a href=\"index.html\">Sign in</a>";
+		        htmlRespone += "</html>";
+			}
+			//pass your response back
+			writer.println(htmlRespone);
 		}
-		
-		//pass your response back
-		writer.println(htmlRespone);
 	}
 }

@@ -82,17 +82,30 @@ public class submitReimbursementServlet extends HttpServlet {
 		
 		//Pass request to controller
 		Object data = RequestHelper.process(request);
+		PrintWriter writer = response.getWriter();
+		String htmlRespone = "";
 				
 		if(((ClientMessage) data).getMessage().equals("REIMBURSEMENET SUBMISSION SUCCESSFUL")) {
-			
-			httpSession.setAttribute("curMessage", "Your reimbursement request was successfully submitted. It is pending approval by a finance manager.");
-	        response.sendRedirect("/ERS/EmployeeServlet");
+		
+	        // build HTML code
+			htmlRespone += "<html><body>";
+			htmlRespone += "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>";
+	        htmlRespone += "<script>"
+	        		+ "swal('Success','Reimbursment Submitted', 'success').then(()=> {window.location.href='/ERS/html/submitReimbursement.html'});"
+	        		+ "</script>";     
+	        htmlRespone += "</body></html>";
 	        
 		} else if (((ClientMessage) data).getMessage().equals("REIMBURSEMENET SUBMISSION UNSUCCESSFUL")){
-			httpSession.setAttribute("curMessage", "Your reimbursement request was unsuccessfully submitted.");
-	        response.sendRedirect("/ERS/EmployeeServlet");
+			htmlRespone += "<html><body>";
+			htmlRespone += "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>";
+	        htmlRespone += "<script>"
+	        		+ "swal('Oopss..','Something Went Wrong', 'error').then(()=> {window.location.href='/ERS/html/submitReimbursement.html'});"
+	        		+ "</script>";      
+	        htmlRespone += "</body></html>";
 		}
 		
+		//pass your response back
+		writer.println(htmlRespone);
 	}
 
 }

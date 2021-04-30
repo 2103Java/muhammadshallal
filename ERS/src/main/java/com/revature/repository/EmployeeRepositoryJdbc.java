@@ -86,14 +86,12 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 		Connection connection = null;
 		try {
 			connection = ConnectionUtil.getConnection();
-					
-			int statementIndex = 0;
 			String command = "SELECT * FROM employees WHERE isManager=?";
 			
 			PreparedStatement statement = connection.prepareStatement(command);
 			
 			//Set attributes to be inserted
-			statement.setBoolean(++statementIndex, false);
+			statement.setBoolean(1, false);
 			
 			ResultSet result = statement.executeQuery();
 
@@ -101,7 +99,7 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 			while(result.next()) {
 				employeeList.add(new Employee(result.getString("firstname"), 
 											  result.getString("lastname"),
-											  result.getString("username"),
+											  result.getString("email"),
 											  result.getString("password"),
 			            					  result.getBoolean("isManager")));
 			}

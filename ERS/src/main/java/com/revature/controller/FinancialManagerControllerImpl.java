@@ -1,5 +1,6 @@
 package com.revature.controller;
 
+import com.revature.repository.ReimbursmentRepositoryJdbc;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import org.apache.log4j.Logger;
 
 import com.revature.model.Employee;
 import com.revature.model.Reimbursment;
-import com.revature.service.EmployeeServiceImpl;
 import com.revature.service.FinancialManagerServiceImpl;
 
 public class FinancialManagerControllerImpl implements FinancialManagerController {
@@ -60,7 +60,24 @@ public class FinancialManagerControllerImpl implements FinancialManagerControlle
 			logger.debug("FINANCIAL MANAGER COULD NOT UPDATE REIMBURSEMENT: " + request.getParameter("ticketId") + " to: " + request.getParameter("selection"));
 		}
 		return modifyResult;
+	}
 	
+	@Override
+	public int getClaimCount() {
+		// TODO Auto-generated method stub
+		return ReimbursmentRepositoryJdbc.getInstance().getClaim().size();
+	}
+
+	@Override
+	public String getStatusById(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return ReimbursmentRepositoryJdbc.getInstance().getStatusById(request.getParameter("id"));
+	}
+
+	@Override
+	public boolean setStatusById(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return ReimbursmentRepositoryJdbc.getInstance().setStatusById(request.getParameter("id"), request.getParameter("status"));
 	}
 	
 }

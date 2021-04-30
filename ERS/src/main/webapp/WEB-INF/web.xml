@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <servlet>
+    <servlet-name>AuthServlet</servlet-name>
+    <servlet-class>com.revature.request.AuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthServlet</servlet-name>
+    <url-pattern>/auth</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>RegisterServlet</servlet-name>
     <servlet-class>com.revature.request.RegisterServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RegisterServlet</servlet-name>
-    <url-pattern>/RegisterServlet</url-pattern>
+    <url-pattern>/register</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>EmpCountServlet</servlet-name>
@@ -14,7 +22,39 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>EmpCountServlet</servlet-name>
-    <url-pattern>/EmployeeCountServlet</url-pattern>
+    <url-pattern>/get/employee/count</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ClaimCountServlet</servlet-name>
+    <servlet-class>com.revature.request.ClaimCountServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClaimCountServlet</servlet-name>
+    <url-pattern>/get/claim/count</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EmpClaimCountServlet</servlet-name>
+    <servlet-class>com.revature.request.EmpClaimCountServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmpClaimCountServlet</servlet-name>
+    <url-pattern>/get/empclaim/count</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ClaimStatusServlet</servlet-name>
+    <servlet-class>com.revature.request.ClaimStatusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClaimStatusServlet</servlet-name>
+    <url-pattern>/claim/status</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SetStatusServlet</servlet-name>
+    <servlet-class>com.revature.request.SetStatusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SetStatusServlet</servlet-name>
+    <url-pattern>/set/status</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>showEmployeeReimbursmentsServlet</servlet-name>
@@ -38,7 +78,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>showReimbursmentsServlet</servlet-name>
-    <url-pattern>/showReimbursmentsServlet</url-pattern>
+    <url-pattern>/all/claim</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>EmployeeServlet</servlet-name>
@@ -62,15 +102,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
-    <url-pattern>/LogoutServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>AuthServlet</servlet-name>
-    <servlet-class>com.revature.request.AuthServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AuthServlet</servlet-name>
-    <url-pattern>/AuthServlet</url-pattern>
+    <url-pattern>/logout</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>FinanceManagerApproveDeny</servlet-name>

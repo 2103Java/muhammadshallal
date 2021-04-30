@@ -166,6 +166,10 @@ public class EmployeeControllerImpl implements EmployeeController{
 			return employeeReimbursmentList;
 		}
 
+		public int getEmployeeCount() {
+			logger.info("GET EMPLOYEE COUNT");
+			return EmployeeServiceImpl.getInstance().getEmployeeCount();
+		}
 }
 
 

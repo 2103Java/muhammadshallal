@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.revature.model.Reimbursment;
 
-@WebServlet("/ERS/showReimbursmentsServlet")
+@WebServlet("/ERS/all/claim")
 public class showReimbursmentsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,57 +42,56 @@ public class showReimbursmentsServlet extends HttpServlet {
   	  return attrList;
   	}
     
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession httpSession = request.getSession(false);
-		String curFilter = (String) httpSession.getAttribute("curFilter");
-		if(curFilter != null) {
-			request.setAttribute("filter", curFilter);
-			doPost(request, response);
-		} else {
-			// get response writer
-			PrintWriter writer = response.getWriter();
-			String htmlResponse = "";
-			htmlResponse += "<html>\r\n"
-					+ "<head>\r\n"
-					+ "	<meta charset=\"ISO-8859-1\">\r\n"
-					+ "	<title>Previous reimbursements</title>\r\n"
-					+ "</head>\r\n"
-					+ "<body>\r\n"
-					+ "	<form action=\"/ERS/showReimbursmentsServlet\" method=\"post\" name=\"submissionForm\">\r\n"
-					+ "			\r\n"
-					+ "			<br>\r\n"
-					+ "			<br>\r\n"
-					+ "			<p>Specify which status to show:</p>\r\n"
-					+ "			<label for=\"all\">All</label>\r\n"
-					+ "			<input type=\"radio\" name=\"filter\" value=\"all\">\r\n"
-					+ "			<label for=\"pending\">Pending</label>\r\n"
-					+ "			<input type=\"radio\" name=\"filter\" value=\"pending\">\r\n"
-					+ "			<label for=\"approved\">Approved</label>\r\n"
-					+ "			<input type=\"radio\" name=\"filter\" value=\"approved\">\r\n"
-					+ "			<label for=\"denied\">Denied</label>\r\n"
-					+ "			<input type=\"radio\" name=\"filter\" value=\"denied\">\r\n"
-					+ "			<label for=\"Lodging\">Lodging</label>\r\n"
-					+ "			<input type=\"radio\" name=\"filter\" value=\"Lodging\">\r\n"
-					+ "			<label for=\"Travel\">Travel</label>\r\n"
-					+ "			<input type=\"radio\" name=\"filter\" value=\"Travel\">\r\n"
-					+ "			<label for=\"Food\">Food</label>\r\n"
-					+ "			<input type=\"radio\" name=\"filter\" value=\"Food\">\r\n"
-					+ "			<label for=\"Other\">Other</label>\r\n"
-					+ "			<input type=\"radio\" name=\"filter\" value=\"Other\">\r\n"
-					+ "			\r\n"
-					+ "			<input type=\"submit\" value=\"Submit\">\r\n"
-					+ "	</form>\r\n"
-					+ "	\r\n"
-					+ "		<br>\r\n"
-					+ "		<br>\r\n"
-					+ "     <a href=\"/ERS/LogoutServlet\">Logout</a>\r\n"
-					+ "</body>\r\n"
-					+ "</html>";
-			//pass your response back
-			writer.println(htmlResponse);
-		}
-		
-    }
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//    	HttpSession httpSession = request.getSession(false);
+//		String id = (String) httpSession.getAttribute("employeeId");
+//		System.out.println("id from session in doGet showReimbursmentsServlet:" + id);
+//		
+//		// get response writer
+//		PrintWriter writer = response.getWriter();
+//		String htmlResposne = "";
+//		htmlResposne += "<html>\r\n"
+//				+ "<head>\r\n"
+//				+ "	<meta charset=\"ISO-8859-1\">\r\n"
+//				+ "	<title>Previous reimbursements</title>\r\n"
+//				+ "</head>\r\n"
+//				+ "<body>\r\n"
+//				+ "	<form action=\"/ERS/showReimbursmentsServlet\" method=\"post\" name=\"submissionForm\">\r\n"
+//				+ "			\r\n"
+//				+ "			<br>\r\n"
+//				+ "			<br>\r\n"
+//				+ "			<p>Specify which status to show:</p>\r\n"
+//				+ "			<label for=\"all\">All</label>\r\n"
+//				+ "			<input type=\"radio\" name=\"filter\" value=\"all\">\r\n"
+//				+ "			<label for=\"pending\">Pending</label>\r\n"
+//				+ "			<input type=\"radio\" name=\"filter\" value=\"pending\">\r\n"
+//				+ "			<label for=\"approved\">Approved</label>\r\n"
+//				+ "			<input type=\"radio\" name=\"filter\" value=\"approved\">\r\n"
+//				+ "			<label for=\"denied\">Denied</label>\r\n"
+//				+ "			<input type=\"radio\" name=\"filter\" value=\"denied\">\r\n"
+//				+ "			<label for=\"Lodging\">Lodging</label>\r\n"
+//				+ "			<input type=\"radio\" name=\"filter\" value=\"Lodging\">\r\n"
+//				+ "			<label for=\"Travel\">Travel</label>\r\n"
+//				+ "			<input type=\"radio\" name=\"filter\" value=\"Travel\">\r\n"
+//				+ "			<label for=\"Food\">Food</label>\r\n"
+//				+ "			<input type=\"radio\" name=\"filter\" value=\"Food\">\r\n"
+//				+ "			<label for=\"Other\">Other</label>\r\n"
+//				+ "			<input type=\"radio\" name=\"filter\" value=\"Other\">\r\n"
+//				+ "			\r\n"
+//				+ "			<input type=\"submit\" value=\"Submit\">\r\n"
+//				+ "	</form>\r\n"
+//				+ "	\r\n"
+//				+ "		<br>\r\n"
+//				+ "		<br>\r\n"
+//				+ "     <a href=\"/ERS/LogoutServlet\">Logout</a>\r\n"
+//				+ "</body>\r\n"
+//				+ "</html>";
+//				
+//		
+//				
+//		//pass your response back
+//		writer.println(htmlResposne);
+//    }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession httpSession = request.getSession(false);
@@ -124,20 +123,9 @@ public class showReimbursmentsServlet extends HttpServlet {
 	        htmlResponse += " reimbursement requests.</h2>";    
 	        htmlResponse += "</html>";
 		} else {
-			htmlResponse += "<html>";
-			htmlResponse += "<h2>Here are ";
-			if(request.getParameter("filter") != null) {
-				htmlResponse += request.getParameter("filter").toLowerCase();
-			} else {
-				htmlResponse += ((String )request.getAttribute("filter")).toLowerCase();
-			}
-			
-			htmlResponse += " reimbursement requests.</h2>"; 
-			
-			
-			htmlResponse += "<table>";
-			htmlResponse += "<thead>";
+			htmlResponse += "<thead class=\"text-primary\">";
 			htmlResponse += "<tr>";
+			htmlResponse += "<th>ID</th>";
 			htmlResponse += "<th>Employee Email</th>";
 			htmlResponse += "<th>Amount</th>";
 			htmlResponse += "<th>Type</th>";
@@ -149,8 +137,10 @@ public class showReimbursmentsServlet extends HttpServlet {
 			
 			htmlResponse += "<tbody>";
 			for(int i = 0; i < previousReimbursements.size(); i++) {
-				
 				htmlResponse += "<tr>";
+				htmlResponse += "<td>";
+				htmlResponse += previousReimbursements.get(i).getId();
+				htmlResponse += "</td>";
 				htmlResponse += "<td>";
 				htmlResponse += previousReimbursements.get(i).getEmployeeId();
 				htmlResponse += "</td>";
@@ -160,26 +150,9 @@ public class showReimbursmentsServlet extends HttpServlet {
 				htmlResponse += "<td>";
 				htmlResponse += previousReimbursements.get(i).getType();
 				htmlResponse += "</td>";
-				if(previousReimbursements.get(i).getStatus().equals("pending")) {
-					htmlResponse += "<td>";
-					htmlResponse += "<form method=\"post\" action=\"/ERS/FinanceManagerApproveDeny\" name=\"fmdecision\">";
-					htmlResponse += "<select name=\"selection\" onchange=\"getValue(this)\">\r\n"
-							+ "		              <option value=\"pending\">Keep it for now</option>\r\n"
-							+ "		              <option value=\"approved\">Approve it</option>\r\n"
-							+ "		              <option value=\"denied\">Deny it</option>\r\n"
-							+ "		            </select>";
-					htmlResponse += "<input type=\"hidden\" id=\"ticketId\" name=\"ticketId\" value=";
-					htmlResponse += previousReimbursements.get(i).getId();
-					htmlResponse += ">";
-					htmlResponse += "<button type=\"submit\" form=\"fmdecision\">change status</button>";
-					
-					htmlResponse += "</form>";
-					htmlResponse += "</td>";
-				} else {
-					htmlResponse += "<td>";
-					htmlResponse += previousReimbursements.get(i).getStatus();
-					htmlResponse += "</td>";
-				}
+				htmlResponse += "<td>";
+				htmlResponse += previousReimbursements.get(i).getStatus();
+				htmlResponse += "</td>";
 				htmlResponse += "<td>";
 				htmlResponse += previousReimbursements.get(i).getSubmissionDate();
 				htmlResponse += "</td>";
@@ -189,8 +162,6 @@ public class showReimbursmentsServlet extends HttpServlet {
 				htmlResponse += "</tr>";
 			}
 			htmlResponse += "</tbody>";
-			htmlResponse += "</table>";
-			htmlResponse += "</html>";
 		}
 		
 		//pass your response back

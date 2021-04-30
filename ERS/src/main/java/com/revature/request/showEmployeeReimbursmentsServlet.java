@@ -87,19 +87,14 @@ public class showEmployeeReimbursmentsServlet extends HttpServlet {
 	        		+ " reimbursement requests.</h2>";    
 	        htmlResposne += "</html>";
 		} else {
-			htmlResposne += "<html>";
-			htmlResposne += "<h2>Here are your previous and ";
-			htmlResposne += request.getParameter("filter").toLowerCase();
-			htmlResposne += " reimbursement requests.</h2>"; 
 			htmlResposne += "<table>";
 			
 			htmlResposne += "<thead>";
 			htmlResposne += "<tr>";
-			htmlResposne += "<th>Amount</th>";
-			htmlResposne += "<th>Type</th>";
-			htmlResposne += "<th>Status</th>";
+			htmlResposne += "<th>Name</th>";
 			htmlResposne += "<th>Submission date</th>";
-			htmlResposne += "<th>Description</th>";
+			htmlResposne += "<th>Status</th>";
+			htmlResposne += "<th>Amount</th>";
 			htmlResposne += "</tr>";
 			htmlResposne += "</thead>";
 			
