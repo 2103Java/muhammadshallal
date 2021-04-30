@@ -27,8 +27,18 @@ public class Reimbursment {
 		this.status = "pending"; //any reimbursement request starts as pending
 		this.submissionDate = LocalDate.now();
 		
-		String cwd = "C:\\Users\\12092\\Desktop\\revature\\ERS\\muhammadshallal\\ERS\\receiptImages\\";
+//		String cwd = "C:\\Users\\12092\\Desktop\\revature\\ERS\\muhammadshallal\\ERS\\receiptImages\\";
+//		File fileToSave = new File(cwd + this.id);
+		
+		String cwd = System.getenv("ersImagesFolder");
+		System.out.println("cwd from env: " + cwd);
 		File fileToSave = new File(cwd + this.id);
+		
+		//For some reason the following doesn't work eventhough it should match the above 
+		//String cwd = Path.of("").toAbsolutePath().toString();
+		//cwd  += "\\receiptImages\\";
+		//File fileToSave = new File(cwd + this.id);
+		
 		this.imagePath = fileToSave.toPath();
 
 	}
