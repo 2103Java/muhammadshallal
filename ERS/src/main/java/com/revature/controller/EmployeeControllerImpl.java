@@ -4,9 +4,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +42,7 @@ public class EmployeeControllerImpl implements EmployeeController{
 		static final Logger logger = Logger.getLogger(EmployeeControllerImpl.class);
 		
 		
-
-		//Implementations without servlets from the frontend
+		//Implementations
 		@Override
 		public Employee login(HttpServletRequest request) {
 			Employee loginResult = EmployeeServiceImpl.getInstance().login(request.getParameter("email"), request.getParameter("password"));
@@ -67,7 +63,7 @@ public class EmployeeControllerImpl implements EmployeeController{
 				return new ClientMessage("EMAIL IS TAKEN");
 			}
 			
-			boolean isFinanceManager = this.financeManagers.contains(request.getParameter("email"));
+			boolean isFinanceManager = EmployeeControllerImpl.financeManagers.contains(request.getParameter("email"));
 					
 			Employee employee = new Employee(request.getParameter("firstname"), 
 											 request.getParameter("lastname"), 
@@ -85,13 +81,13 @@ public class EmployeeControllerImpl implements EmployeeController{
 		}
 
 		@Override
-		public ClientMessage unregister(String email) {
+		public ClientMessage unregister(HttpServletRequest request) {
 			
-			if (EmployeeServiceImpl.getInstance().unregisterEmployee(email) == true){
-				logger.info("UNREGISTRATION SUCCESSFUL BY " + email);
+			if (EmployeeServiceImpl.getInstance().unregisterEmployee(request.getParameter("email")) == true){
+				logger.info("UNREGISTRATION SUCCESSFUL BY " + request.getParameter("email"));
 				return new ClientMessage("UNREGISTRATION SUCCESSFUL");
 			} else {
-				logger.info("UNREGISTRATION UNSUCCESSFUL BY " + email);
+				logger.info("UNREGISTRATION UNSUCCESSFUL BY " + request.getParameter("email"));
 				return new ClientMessage("SOMETHING WENT WRONG DURING UNREGISTRATION");
 			}
 		}
@@ -116,7 +112,6 @@ public class EmployeeControllerImpl implements EmployeeController{
 			httpSession.invalidate();
 			logger.info("AN EMPLOYEE WITH THIS USERNAME: " + id + ", JUST LOGGEDOUT");
 			return new ClientMessage("AN EMPLOYEE WITH THIS USERNAME ALREADY LOGGEDOUT");
-			
 		}
 
 		@Override
@@ -129,27 +124,27 @@ public class EmployeeControllerImpl implements EmployeeController{
                     request.getParameter("category"),
                     request.getParameter("Description"));
 
-			// https://happycoding.io/tutorials/java-server/uploading-files
 			//Handle uploaded receipts by copying the InputStream into the receipts directory
 			try {
-			Part filePart = request.getPart("fileselect");
-			
-			System.out.println(filePart.getName());
-			System.out.println(filePart.getContentType());
-			System.out.println(filePart.getSubmittedFileName());
-			System.out.println(filePart.getSize());
-			
-			InputStream fileContent = filePart.getInputStream();
-			OutputStream fileOutput = new FileOutputStream(reimbursment.getImagePath().toString());
-			fileOutput.write(fileContent.read());
-			fileContent.close();
-			fileOutput.close();
+				Part filePart = request.getPart("fileselect");
+				
+				//System.out.println(filePart.getName());
+				//System.out.println(filePart.getContentType());
+				//System.out.println(filePart.getSubmittedFileName());
+				//System.out.println(filePart.getSize());
+				
+				InputStream fileContent = filePart.getInputStream();
+				OutputStream fileOutput = new FileOutputStream(reimbursment.getImagePath().toString());
+				fileOutput.write(fileContent.read());
+				fileContent.close();
+				fileOutput.close();
 			
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ServletException e) {
 				e.printStackTrace();
-			} // Retrieves <input type="file" name="fileselect">
+			} 
+
 			boolean submissionResult = EmployeeServiceImpl.getInstance().submitReimbursment(reimbursment);
 			if (submissionResult == true) {
 				logger.info("REIMBURSEMENET SUBMISSION SUCCESSFUL: " + reimbursment.getId() + " BY " + reimbursment.getEmployeeId());

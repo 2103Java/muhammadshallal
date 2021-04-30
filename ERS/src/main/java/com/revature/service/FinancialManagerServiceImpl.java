@@ -3,8 +3,6 @@ package com.revature.service;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
-import com.revature.ajax.ClientMessage;
 import com.revature.model.Employee;
 import com.revature.model.Reimbursment;
 import com.revature.repository.EmployeeRepositoryJdbc;
@@ -35,13 +33,6 @@ public class FinancialManagerServiceImpl implements FinancialManagerService {
 		return EmployeeRepositoryJdbc.getInstance().selectAllEmployees();
 	}
 	
-	@Override
-	public ClientMessage viewAllEmployees() {
-		List<Employee> employeeList = FinancialManagerServiceImpl.getInstance().listEmployees();
-		logger.info("LIST OF ALL EMPLOYEES IS VIEWED BY A FINANCE MANAGER");		
-		return new ClientMessage("LIST OF ALL EMPLOYEES IS VIEWED");
-	}
-
 	@Override
 	public List<Reimbursment> showReimbursements(String filter) {
 		logger.info("SHOW " + filter.toUpperCase() + " REIMBURSEMENETS SERVICE TO A FINANCE MANAGER");

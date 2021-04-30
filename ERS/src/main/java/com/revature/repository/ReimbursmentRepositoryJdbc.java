@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +58,7 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES WITH SELECTING ALL REIMBURSEMENTS");
 			e.printStackTrace();
-			return new ArrayList<>();
+			return null;
 		} 
 	}
 	
@@ -95,7 +94,7 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF EMPLOYEE WITH THIS USERNAME: " + employeeId.toUpperCase() + ", IN RDS");
 			e.printStackTrace();
-			return new ArrayList<>();
+			return null;
 		} 
 	}
     
@@ -132,7 +131,7 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + ", IN RDS");
 			e.printStackTrace();
-			return new ArrayList<>();
+			return null;
 		} 
 	}
 
@@ -168,7 +167,7 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.info("ISSUES WITH SELECTING REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + ", IN RDS");
 			e.printStackTrace();
-			return new ArrayList<>();
+			return null;
 		} 
 	}
 	
@@ -204,7 +203,7 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES FINDING REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", IN RDS");
 			e.printStackTrace();
-			return new ArrayList<>();
+			return null;
 		} 
 	}
 
@@ -239,7 +238,7 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES FINDING REIMBURSEMENTS OF STATUS: " + status.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", IN RDS");
 			e.printStackTrace();
-			return new ArrayList<>();
+			return null;
 		} 
 	}
 

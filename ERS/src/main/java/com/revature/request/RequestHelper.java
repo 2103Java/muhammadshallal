@@ -10,16 +10,7 @@ import com.revature.controller.FinancialManagerControllerImpl;
 public class RequestHelper {
 	
 	public RequestHelper() {}
-	
-	public static ClientMessage process(String whatToDo, String firstname, String lastname, String username, String password, boolean isManager) {
-		switch(whatToDo) {
-			case "unregisterEmployee":
-				return EmployeeControllerImpl.getInstance().unregister(username);
-			default:
-				return new ClientMessage("not-implemented yes");
-		}
-	}
-	
+		
 	public static Object process(HttpServletRequest request) {
 		switch(request.getRequestURI()) {
 			case "/ERS/AuthServlet":
@@ -38,6 +29,8 @@ public class RequestHelper {
 				return FinancialManagerControllerImpl.getInstance().showReimbursements(request);
 			case "/ERS/FinanceManagerApproveDeny":
 				return FinancialManagerControllerImpl.getInstance().modifyStatus(request);
+			case "unregisterEmployee":
+				return EmployeeControllerImpl.getInstance().unregister(request);
 
 			default:
 				return new ClientMessage("not-implemented yes");

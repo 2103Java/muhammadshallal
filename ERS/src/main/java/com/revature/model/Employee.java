@@ -5,11 +5,10 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private String email; // primary key
-	private String password; //hashed?
+	private String password; //hashed
 	private boolean isManager;
 	
 	public Employee() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 	
@@ -58,7 +57,4 @@ public class Employee {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
 }

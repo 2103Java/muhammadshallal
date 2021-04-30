@@ -22,8 +22,6 @@ public class EmployeeServlet extends HttpServlet {
 		HttpSession httpSession = request.getSession(false);
 		String curMessage = (String) httpSession.getAttribute("curMessage");
 		
-		
-		
 		// get response writer
 		PrintWriter writer = response.getWriter();
 		String htmlResposne = "";

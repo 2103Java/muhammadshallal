@@ -13,14 +13,6 @@ public interface EmployeeRepository {
 	//DML
 	public boolean insert(Employee employee);
 	public boolean delete(String username);
-	
 	public Employee authenticate(String username, String password);
-	
-	
-	// Do we want to include updates to the reimbursement requests?
-//	public boolean updateUsername(String oldUsername, String newUsername); 
-//	public boolean updateFirstName(String username, String newFirstName); 
-//	public boolean updateLastName(String username, String newLastName); 
-//	public boolean updatePassword(String username, String newPassword); 
 
 }

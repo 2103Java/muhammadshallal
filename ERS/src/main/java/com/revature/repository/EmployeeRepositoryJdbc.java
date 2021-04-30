@@ -39,7 +39,7 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 	//configure logger
 	static final Logger logger = Logger.getLogger(EmployeeRepositoryJdbc.class);
 			
-	//Hashing password
+	//Method for Hashing password
 	protected String hashPass(String pass) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		byte[] salt = new byte[16];
 		KeySpec spec = new PBEKeySpec(pass.toCharArray(), salt, 65536, 128);
@@ -69,15 +69,16 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 			if(result.next()) {
 				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", IS FOUND IN RDS");
 				return true;
+			} else {
+				logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", IS NOT FOUND IN RDS");
+				return false;
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES SELECTING AN EMPLOYEE WITH USERNAME: " + username);
 			e.printStackTrace();
+			return false;
 		}
-		
-		logger.info("AN EMPLOYEE WITH THIS USERNAME: " + username + ", IS NOT FOUND IN RDS");
-		return false;
 	}
 	
 	@Override
@@ -109,9 +110,8 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES WITH SELECTING ALL EMPLOYEES");
 			e.printStackTrace();
+			return null;
 		} 
-		logger.info("EMPTY EMPLOYEES TABLE");
-		return new ArrayList<>();
 	}
 
 	@Override
@@ -137,14 +137,16 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 			if(statement.executeUpdate() > 0) {
 				logger.info("AN EMPLOYEE IS INSERTED TO THE RDS");
 				return true;
+			} else {
+				logger.debug("ISSUES WITH INSERTING AN EMPLOYEE NON EXCEPTION");
+				return false;
 			}
 			
 		} catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
 			logger.debug("ISSUES WITH INSERTING AN EMPLOYEE");
 			e.printStackTrace();
+			return false;
 		}
-		logger.debug("ISSUES WITH INSERTING AN EMPLOYEE NON EXCEPTION");
-		return false;
 	}
 
 	
@@ -165,13 +167,15 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 			if(statement.executeUpdate() > 0) {
 				logger.info("AN EMPLOYEE IS DELETED FROM THE RDS");
 				return true;
+			} else {
+				logger.debug("ISSUES WITH DELETING AN EMPLOYEE NON EXCEPTION");
+				return false;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.debug("ISSUES WITH DELETING AN EMPLOYEE");
 			e.printStackTrace();
+			return false;
 		}
-		logger.debug("ISSUES WITH DELETING AN EMPLOYEE NON EXCEPTION");
-		return false;
 	}
 
 	@Override

@@ -30,7 +30,6 @@ public class EmployeeCountServlet extends HttpServlet {
 		HttpSession httpSession = request.getSession(false);
 		if (httpSession != null) {
 			Object data = RequestHelper.process(request);
-			//EmployeeController employeeController = new EmployeeControllerImpl();
 			response.setContentType("text/html");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write((Integer) data);

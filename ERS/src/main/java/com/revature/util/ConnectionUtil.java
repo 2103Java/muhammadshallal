@@ -4,9 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-
 public final class ConnectionUtil {
 
 

@@ -1,10 +1,8 @@
 package com.revature.model;
 
-import java.util.Date;
 import java.util.UUID;
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 
 public class Reimbursment {
@@ -15,7 +13,7 @@ public class Reimbursment {
 	private String description;
 	private String status; //pending, approved, denied
 	private LocalDate  submissionDate;
-	private Path imagePath;
+	private Path imagePath; //path of uploaded receipt image
 	
 	public Reimbursment(String employeeId, Double amount, String type, String description) {
 		super();
@@ -27,23 +25,12 @@ public class Reimbursment {
 		this.status = "pending"; //any reimbursement request starts as pending
 		this.submissionDate = LocalDate.now();
 		
-//		String cwd = "C:\\Users\\12092\\Desktop\\revature\\ERS\\muhammadshallal\\ERS\\receiptImages\\";
-//		File fileToSave = new File(cwd + this.id);
-		
 		String cwd = System.getenv("ersImagesFolder");
-		System.out.println("cwd from env: " + cwd);
 		File fileToSave = new File(cwd + this.id);
-		
-		//For some reason the following doesn't work eventhough it should match the above 
-		//String cwd = Path.of("").toAbsolutePath().toString();
-		//cwd  += "\\receiptImages\\";
-		//File fileToSave = new File(cwd + this.id);
-		
 		this.imagePath = fileToSave.toPath();
-
 	}
 	
-	//Overloaded constructor for retreiving objects from the database
+	//Overloaded constructor for retrieving objects from the database
 	public Reimbursment(String id, String employeeId, Double amount, String type, String status, LocalDate submissionDate, String description) {
 		super();
 		this.id = id;
@@ -51,13 +38,12 @@ public class Reimbursment {
 		this.amount = amount;
 		this.type = type;
 		this.description = description;
-		this.status = status; //any reimbursement request starts as pending
+		this.status = status; 
 		this.submissionDate = submissionDate;
 		
-		//String cwd = Path.of("").toAbsolutePath().toString();
-		File fileToSave = new File(".\\receiptImages\\" + this.id);
+		String cwd = System.getenv("ersImagesFolder");
+		File fileToSave = new File(cwd + this.id);
 		this.imagePath = fileToSave.toPath();
-
 	}
 
 	public String getId() {

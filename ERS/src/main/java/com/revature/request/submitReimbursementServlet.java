@@ -2,8 +2,6 @@ package com.revature.request;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -25,10 +23,6 @@ public class submitReimbursementServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession httpSession = request.getSession(false);
-		String id = (String) httpSession.getAttribute("employeeId");
-		//System.out.println("id from session in doGet submitReimbursementServlet:" + id);
-		
 		// get response writer
 		PrintWriter writer = response.getWriter();
 		String htmlResposne = "";

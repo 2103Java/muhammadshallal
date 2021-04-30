@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 @WebServlet("/ERS/FinanceManagerServlet")
 public class FinanceManagerServlet extends HttpServlet {
@@ -19,8 +19,6 @@ public class FinanceManagerServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession httpSession = request.getSession(false);
-		
 		// get response writer
 		PrintWriter writer = response.getWriter();
 		String htmlResposne = "";
