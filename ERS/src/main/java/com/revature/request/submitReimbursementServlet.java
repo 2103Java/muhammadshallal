@@ -95,18 +95,25 @@ public class submitReimbursementServlet extends HttpServlet {
 		if(((ClientMessage) data).getMessage().equals("REIMBURSEMENET SUBMISSION SUCCESSFUL")) {
 			
 	        // build HTML code
-	        htmlRespone += "<html>";
-	        htmlRespone += "<h2>Your reimbursement request was successfully submitted. It is pending approval by a finance manager.</h2>";    
-	        htmlRespone += "</html>";
+			htmlRespone += "<html><body>";
+			htmlRespone += "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>";
+	        htmlRespone += "<script>"
+	        		+ "swal('Success','Reimbursment Submitted', 'success').then(()=> {window.location.href='/ERS/html/submitReimbursement.html'});"
+	        		+ "</script>";     
+	        htmlRespone += "</body></html>";
 	        
 		} else if (((ClientMessage) data).getMessage().equals("REIMBURSEMENET SUBMISSION UNSUCCESSFUL")){
-			htmlRespone += "<html>";
-	        htmlRespone += "<h2>Your reimbursement request was unsuccessfully submitted.</h2>";    
-	        htmlRespone += "</html>";
+			htmlRespone += "<html><body>";
+			htmlRespone += "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>";
+	        htmlRespone += "<script>"
+	        		+ "swal('Oopss..','Something Went Wrong', 'error').then(()=> {window.location.href='/ERS/html/submitReimbursement.html'});"
+	        		+ "</script>";      
+	        htmlRespone += "</body></html>";
 		}
 		
 		//pass your response back
 		writer.println(htmlRespone);
+		
 	}
 
 }

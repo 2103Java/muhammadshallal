@@ -33,12 +33,28 @@
     <url-pattern>/get/claim/count</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>GetAllClaimServlet</servlet-name>
-    <servlet-class>com.revature.request.GetAllClaimServlet</servlet-class>
+    <servlet-name>EmpClaimCountServlet</servlet-name>
+    <servlet-class>com.revature.request.EmpClaimCountServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>GetAllClaimServlet</servlet-name>
-    <url-pattern>/all/claim</url-pattern>
+    <servlet-name>EmpClaimCountServlet</servlet-name>
+    <url-pattern>/get/empclaim/count</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ClaimStatusServlet</servlet-name>
+    <servlet-class>com.revature.request.ClaimStatusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClaimStatusServlet</servlet-name>
+    <url-pattern>/claim/status</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SetStatusServlet</servlet-name>
+    <servlet-class>com.revature.request.SetStatusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SetStatusServlet</servlet-name>
+    <url-pattern>/set/status</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>showEmployeeReimbursmentsServlet</servlet-name>
@@ -62,7 +78,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>showReimbursmentsServlet</servlet-name>
-    <url-pattern>/showReimbursmentsServlet</url-pattern>
+    <url-pattern>/all/claim</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>EmployeeServlet</servlet-name>
@@ -86,6 +102,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
-    <url-pattern>/LogoutServlet</url-pattern>
+    <url-pattern>/logout</url-pattern>
   </servlet-mapping>
 </web-app>

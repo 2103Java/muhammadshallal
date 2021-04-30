@@ -67,7 +67,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Sign Out</a>
+                                <a id="signOut" class="nav-link" style="cursor: pointer;">Sign Out</a>
                             </li>
                         </ul>
                     </div>
@@ -77,9 +77,9 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <div class="card text-white bg-success mb-3" style="max-width: 50rem;">
-                        <div class="card-header">No. Of Employees</div>
+                        <div class="card-header">No. Of Claims</div>
                         <div class="card-body">
-                            <h1 id="empCount" class="count">:0</h1>
+                            <h1 id="claimCount" class="count">:0</h1>
                         </div>
                     </div>
                 </div>
@@ -88,9 +88,9 @@
             	<div class="col-md-3"></div>
             	<div class="col-md-6">
             		<div class="card text-white bg-info mb-3" style="max-width: 50rem;">
-					  <div class="card-header">No. Of Claims</div>
+					  <div class="card-header">No. Of Reimbursements</div>
 					  <div class="card-body">
-					    <h1 id="claimCount" class="count">:0</h1>
+					    <h1 id="reimCount" class="count">:0</h1>
 					  </div>
 					</div>
             	</div>
@@ -107,7 +107,8 @@
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-    <script type="text/javascript" src="../js/mdash.js"></script>
+    <script type="text/javascript" src="../js/edash.js"></script>
+    <script type="text/javascript" src="../js/signout.js"></script>
 </body>
 
 </html>

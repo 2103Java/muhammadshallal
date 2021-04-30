@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -314,18 +316,68 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 	
 	
 	@Override
-	public List<Reimbursment> getClaim() {
+	public Map<Reimbursment, String> getClaim() {
 		Connection connection = null;
-		List<Reimbursment> reimbursments = new ArrayList<>();
+		Map<Reimbursment, String> map = new HashMap<Reimbursment, String>();
 		try {
 			connection = ConnectionUtil.getConnection();
-			String command = "SELECT * FROM reimbursments";
+			String command = "SELECT e.firstname, r.submissiondate, r.status, r.amount FROM "
+					+ "employees e, reimbursments r where e.email = r.employeeid";
 			PreparedStatement statement = connection.prepareStatement(command);
 			ResultSet result = statement.executeQuery();
-			return reimbursments;
+			while (result.next()) {
+				String empName = result.getString("firstname");
+				Reimbursment reimbursment = new Reimbursment(
+						null,
+						null, 
+						  result.getDouble("amount"),
+						  null,
+						  result.getString("status"),
+						  result.getDate("submissiondate").toLocalDate(),
+						  null);
+				map.put(reimbursment, empName);
+			}
+			return map;
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println("Issues with getting reimbursment.");
-			return new ArrayList<>();
+			return new HashMap();
+		}
+	}
+
+	@Override
+	public String getStatusById(String id) {
+		// TODO Auto-generated method stub
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String command = "SELECT status FROM reimbursments WHERE id=?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setString(1, id);
+			ResultSet result = statement.executeQuery();
+			result.next();
+			return result.getString("status");
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Issues with getting reimbursment.");
+			return "Claim Not Found";
+		}
+	}
+
+	@Override
+	public boolean setStatusById(String id, String status) {
+		// TODO Auto-generated method stub
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String command = "update reimbursments set status = ? WHERE id = ?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setString(1, status);
+			statement.setString(2, id);
+			statement.executeUpdate();
+			return true;
+			
+		}catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Issues with getting reimbursment.");
+			return false;
 		}
 	}
 	

@@ -40,7 +40,6 @@ public class FinancialManagerControllerImpl implements FinancialManagerControlle
 
 	@Override
 	public List<Reimbursment> showReimbursements(HttpServletRequest request) {
-		
 		List<Reimbursment> reimbursmentList = FinancialManagerServiceImpl.getInstance().showReimbursements(request.getParameter("filter"));
 		logger.info("LIST OF REIMBURSEMENETS IS VIEWED BY A FINANCE MANAGER");
 		
@@ -52,6 +51,18 @@ public class FinancialManagerControllerImpl implements FinancialManagerControlle
 	public int getClaimCount() {
 		// TODO Auto-generated method stub
 		return ReimbursmentRepositoryJdbc.getInstance().getClaim().size();
+	}
+
+	@Override
+	public String getStatusById(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return ReimbursmentRepositoryJdbc.getInstance().getStatusById(request.getParameter("id"));
+	}
+
+	@Override
+	public boolean setStatusById(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return ReimbursmentRepositoryJdbc.getInstance().setStatusById(request.getParameter("id"), request.getParameter("status"));
 	}
 	
 }

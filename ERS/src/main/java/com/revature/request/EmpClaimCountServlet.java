@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class GetAllClaimServlet extends HttpServlet {
+public class EmpClaimCountServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,5 +22,7 @@ public class GetAllClaimServlet extends HttpServlet {
 		}
 		else resp.sendError(401);
 	}
+
+	
 	
 }

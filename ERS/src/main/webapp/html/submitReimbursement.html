@@ -71,7 +71,7 @@
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
 							<ul class="nav navbar-nav ml-auto">
 								<li class="nav-item">
-									<a class="nav-link" href="#">Sign Out</a>
+									<a id="signOut" class="nav-link" style="cursor: pointer;">Sign Out</a>
 								</li>
 							</ul>
 						</div>
@@ -89,12 +89,12 @@
 								</div>
 								<div class="col-md-3"></div>
 								<div class="col-md-3">
-									<select class="form-select" name="Category" aria-label="Default select example" required>
+									<select name="category" class="form-select" aria-label="Default select example" required>
 									  <option selected>Reimbursement Type</option>
-									  <option value="Travel">Travel</option>
-									  <option value="Food">Food</option>
-									  <option value="Lodging">Lodging</option>
-									  <option value="Other">Other</option>
+									  <option value="travel">Travel</option>
+									  <option value="food">Food</option>
+									  <option value="lodging">Lodging</option>
+									  <option value="other">Other</option>
 									</select>
 								</div>
 							</div>
@@ -102,12 +102,12 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="exampleFormControlTextarea1">Description</label>
-										<textarea class="form-control" id="exampleFormControlTextarea1"  name="Description" rows="5"></textarea>
+										<textarea class="form-control" id="exampleFormControlTextarea1" name="Description" rows="5"></textarea>
 									</div>
 								</div>
 								<div class="col-md-3"></div>
 								<div class="col-md-3">
-									<input type="file" class="input-group form-group form-control" name="fileselect" />
+									<input type="file" name="fileselect" class="input-group form-group form-control" id="customFile" />
 								</div>
 							</div>
 							<div style="text-align: right;">
@@ -128,5 +128,6 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 		<!-- jQuery Custom Scroller CDN -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+		<script type="text/javascript" src="../js/signout.js"></script>
 	</body>
 </html>

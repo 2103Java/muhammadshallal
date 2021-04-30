@@ -23,9 +23,7 @@ public class LogoutServlet extends HttpServlet {
 		Object data = RequestHelper.process(request);
 		if (data == null)
 			response.sendError(401);
-		else {
-			response.sendRedirect("index.html");
-		}
+		else response.sendRedirect("html/login.html");
 	}
 
 

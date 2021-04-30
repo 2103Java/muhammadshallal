@@ -30,14 +30,20 @@ public class RequestHelper {
 				return EmployeeControllerImpl.getInstance().getEmployeeCount();
 			case "/ERS/get/claim/count":
 				return FinancialManagerControllerImpl.getInstance().getClaimCount();
-			case "/ERS/LogoutServlet":
+			case "/ERS/logout":
 				return EmployeeControllerImpl.getInstance().logout(request);
 			case "/ERS/submitReimbursementServlet":
 				return EmployeeControllerImpl.getInstance().submitReimbursement(request);
 			case "/ERS/showEmployeeReimbursmentsServlet":
 				return EmployeeControllerImpl.getInstance().showEmployeeReimbursements(request);
-			case "/ERS/showReimbursmentsServlet":
+			case "/ERS/get/empclaim/count":
+				return EmployeeControllerImpl.getInstance().showEmployeeReimbursements(request).size();
+			case "/ERS/all/claim":
 				return FinancialManagerControllerImpl.getInstance().showReimbursements(request);
+			case "/ERS/claim/status":
+				return FinancialManagerControllerImpl.getInstance().getStatusById(request);
+			case "/ERS/set/status":
+				return FinancialManagerControllerImpl.getInstance().setStatusById(request);
 
 			default:
 				return new ClientMessage("not-implemented yes");
