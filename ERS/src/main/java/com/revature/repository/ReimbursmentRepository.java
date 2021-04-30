@@ -9,7 +9,7 @@ public interface ReimbursmentRepository {
 	//DQL
 	public List<Reimbursment> selectAllReimbursments(); //NIY // service for financial managers only
 	public List<Reimbursment> selectByEmployeeId(String employeeId); //service for employee and for financial managers
-	public List<Reimbursment> selectByType(String type); //service for employee and for financial managers
+	public List<Reimbursment> selectByTypeAndStatus(String type, String status); //service for employee and for financial managers
 	public List<Reimbursment> selectByStatus(String status); //service for employee and for financial managers
 	
 	public List<Reimbursment> selectByEmployeeType(String employeeId, String type); //NIY // service for financial managers only

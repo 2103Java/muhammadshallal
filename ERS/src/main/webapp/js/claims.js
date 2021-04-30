@@ -6,13 +6,11 @@
     });
 
     document.getElementById("typeSelect").addEventListener("change", function () {
-    	document.getElementById("statusSelect").value = 'all';
-        getAllClaims(document.getElementById("typeSelect").value);
+        getAllClaims(document.getElementById("typeSelect").value, document.getElementById("statusSelect").value);
     });
 
     document.getElementById("statusSelect").addEventListener("change", function () {
-    	document.getElementById("typeSelect").value = 'all';
-        getAllClaims(document.getElementById("statusSelect").value);
+        getAllClaims(document.getElementById("typeSelect").value, document.getElementById("statusSelect").value);
     });
 
     document.getElementById("approve").addEventListener("click", function () {
@@ -46,14 +44,14 @@
         xhttp.send();
     });
 
-    function getAllClaims(filter) {
+    function getAllClaims(filter1, filter2) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("claimTable").innerHTML = this.responseText;
             }
         };
-        xhttp.open("POST", "http://localhost:8080/ERS/all/claim?filter="+filter, true);
+        xhttp.open("POST", "http://localhost:8080/ERS/all/claim?filter1="+filter1+"&filter2="+filter2, true);
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhttp.send();
     }
@@ -63,6 +61,8 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
             	swal("Success", "Claim "+status, "success").then(() => {
+                    document.getElementById("statusSelect").value = 'all';
+                    document.getElementById("typeSelect").value = 'all';
             		getAllClaims('all');
             	})
                 
@@ -73,6 +73,6 @@
         xhttp.send();
     }
     
-    getAllClaims('all');
+    getAllClaims('all', 'all');
 
 })();

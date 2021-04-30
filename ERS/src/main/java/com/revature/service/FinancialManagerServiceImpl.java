@@ -34,15 +34,12 @@ public class FinancialManagerServiceImpl implements FinancialManagerService {
 	}
 	
 	@Override
-	public List<Reimbursment> showReimbursements(String filter) {
-		logger.info("SHOW " + filter.toUpperCase() + " REIMBURSEMENETS SERVICE TO A FINANCE MANAGER");
-		if(filter.equals("all")) {
+	public List<Reimbursment> showReimbursements(String filter1, String filter2) {
+		logger.info("SHOW " + filter1.toUpperCase() + " REIMBURSEMENETS SERVICE TO A FINANCE MANAGER");
+		if(filter1.equals("all") && filter2.equals("all")) {
 			return ReimbursmentRepositoryJdbc.getInstance().selectAllReimbursments();
-		} else if(filter.equals("pending") || filter.equals("approved") || filter.equals("denied")){
-			return ReimbursmentRepositoryJdbc.getInstance().selectByStatus(filter);
-		} else {
-			return ReimbursmentRepositoryJdbc.getInstance().selectByType(filter);
-		}
+		} 
+		else return ReimbursmentRepositoryJdbc.getInstance().selectByTypeAndStatus(filter1, filter2);
 	}
 
 	@Override

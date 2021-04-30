@@ -41,10 +41,10 @@ public class FinancialManagerControllerImpl implements FinancialManagerControlle
 	@Override
 	public List<Reimbursment> showReimbursements(HttpServletRequest request) {
 		List<Reimbursment> reimbursmentList = null;
-		if(request.getParameter("filter") == null) {
-			reimbursmentList = FinancialManagerServiceImpl.getInstance().showReimbursements((String) request.getAttribute("filter"));
+		if(request.getParameter("filter1") == null && request.getParameter("filter2") == null) {
+			reimbursmentList = FinancialManagerServiceImpl.getInstance().showReimbursements("all", "all");
 		} else {
-			reimbursmentList = FinancialManagerServiceImpl.getInstance().showReimbursements(request.getParameter("filter"));
+			reimbursmentList = FinancialManagerServiceImpl.getInstance().showReimbursements(request.getParameter("filter1"), request.getParameter("filter2"));
 		}
 		logger.info("LIST OF REIMBURSEMENETS IS VIEWED BY A FINANCE MANAGER");
 		return reimbursmentList;

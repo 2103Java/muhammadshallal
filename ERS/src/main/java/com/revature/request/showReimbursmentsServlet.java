@@ -110,59 +110,45 @@ public class showReimbursmentsServlet extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		String htmlResponse = "";
 		
-		if(previousReimbursements.size() == 0) {
-			// build HTML code
-	        htmlResponse += "<html>";
-	        htmlResponse += "<h2>There are no ";
-	        if(request.getParameter("filter") != null) {
-	        	htmlResponse += request.getParameter("filter").toLowerCase();
-	        }else {
-	        	htmlResponse += ((String )request.getAttribute("filter")).toLowerCase();
-	        }
-	        
-	        htmlResponse += " reimbursement requests.</h2>";    
-	        htmlResponse += "</html>";
-		} else {
-			htmlResponse += "<thead class=\"text-primary\">";
+		htmlResponse += "<thead class=\"text-primary\">";
+		htmlResponse += "<tr>";
+		htmlResponse += "<th>ID</th>";
+		htmlResponse += "<th>Employee Email</th>";
+		htmlResponse += "<th>Amount</th>";
+		htmlResponse += "<th>Type</th>";
+		htmlResponse += "<th>Status</th>";
+		htmlResponse += "<th>Submission date</th>";
+		htmlResponse += "<th>Description</th>";
+		htmlResponse += "</tr>";
+		htmlResponse += "</thead>";
+		
+		htmlResponse += "<tbody>";
+		for(int i = 0; i < previousReimbursements.size(); i++) {
 			htmlResponse += "<tr>";
-			htmlResponse += "<th>ID</th>";
-			htmlResponse += "<th>Employee Email</th>";
-			htmlResponse += "<th>Amount</th>";
-			htmlResponse += "<th>Type</th>";
-			htmlResponse += "<th>Status</th>";
-			htmlResponse += "<th>Submission date</th>";
-			htmlResponse += "<th>Description</th>";
+			htmlResponse += "<td>";
+			htmlResponse += previousReimbursements.get(i).getId();
+			htmlResponse += "</td>";
+			htmlResponse += "<td>";
+			htmlResponse += previousReimbursements.get(i).getEmployeeId();
+			htmlResponse += "</td>";
+			htmlResponse += "<td>";
+			htmlResponse += previousReimbursements.get(i).getAmount();
+			htmlResponse += "</td>";
+			htmlResponse += "<td>";
+			htmlResponse += previousReimbursements.get(i).getType();
+			htmlResponse += "</td>";
+			htmlResponse += "<td>";
+			htmlResponse += previousReimbursements.get(i).getStatus();
+			htmlResponse += "</td>";
+			htmlResponse += "<td>";
+			htmlResponse += previousReimbursements.get(i).getSubmissionDate();
+			htmlResponse += "</td>";
+			htmlResponse += "<td>";
+			htmlResponse += previousReimbursements.get(i).getDescription();
+			htmlResponse += "</td>";
 			htmlResponse += "</tr>";
-			htmlResponse += "</thead>";
-			
-			htmlResponse += "<tbody>";
-			for(int i = 0; i < previousReimbursements.size(); i++) {
-				htmlResponse += "<tr>";
-				htmlResponse += "<td>";
-				htmlResponse += previousReimbursements.get(i).getId();
-				htmlResponse += "</td>";
-				htmlResponse += "<td>";
-				htmlResponse += previousReimbursements.get(i).getEmployeeId();
-				htmlResponse += "</td>";
-				htmlResponse += "<td>";
-				htmlResponse += previousReimbursements.get(i).getAmount();
-				htmlResponse += "</td>";
-				htmlResponse += "<td>";
-				htmlResponse += previousReimbursements.get(i).getType();
-				htmlResponse += "</td>";
-				htmlResponse += "<td>";
-				htmlResponse += previousReimbursements.get(i).getStatus();
-				htmlResponse += "</td>";
-				htmlResponse += "<td>";
-				htmlResponse += previousReimbursements.get(i).getSubmissionDate();
-				htmlResponse += "</td>";
-				htmlResponse += "<td>";
-				htmlResponse += previousReimbursements.get(i).getDescription();
-				htmlResponse += "</td>";
-				htmlResponse += "</tr>";
-			}
-			htmlResponse += "</tbody>";
 		}
+		htmlResponse += "</tbody>";
 		
 		//pass your response back
 		writer.println(htmlResponse);

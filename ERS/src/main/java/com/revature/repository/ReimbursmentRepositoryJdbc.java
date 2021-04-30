@@ -101,17 +101,22 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 	}
     
 	@Override
-	public List<Reimbursment> selectByType(String type) {
+	public List<Reimbursment> selectByTypeAndStatus(String type, String status) {
 		Connection connection = null;
 		try {
 			connection = ConnectionUtil.getConnection();
 					
 			int statementIndex = 0;
-			String command = "SELECT * FROM reimbursments WHERE typeof=?";
+			String command = "SELECT * FROM reimbursments WHERE typeof like ? and status like ?";
 			PreparedStatement statement = connection.prepareStatement(command);
 
 			//Set attributes to be inserted
-			statement.setString(++statementIndex, type);
+			if (type.equals("all"))
+				statement.setString(1, "%%");
+			else statement.setString(1, type);
+			if (status.equals("all"))
+				statement.setString(2, "%%");
+			else statement.setString(2, status);
 			
 			ResultSet result = statement.executeQuery();
 

@@ -92,7 +92,7 @@ public class submitReimbursementServlet extends HttpServlet {
 			htmlRespone += "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>";
 	        htmlRespone += "<script>"
 	        		+ "swal('Success','Reimbursment Submitted', 'success').then(()=> {window.location.href='/ERS/html/submitReimbursement.html'});"
-	        		+ "</script>";     
+	        		+ "</script>";
 	        htmlRespone += "</body></html>";
 	        
 		} else if (((ClientMessage) data).getMessage().equals("REIMBURSEMENET SUBMISSION UNSUCCESSFUL")){
