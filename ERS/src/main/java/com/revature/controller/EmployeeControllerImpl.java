@@ -168,7 +168,7 @@ public class EmployeeControllerImpl implements EmployeeController{
 
 		public int getEmployeeCount() {
 			logger.info("GET EMPLOYEE COUNT");
-			return EmployeeServiceImpl.getInstance().getEmployeeCount() - financeManagers.size();
+			return EmployeeServiceImpl.getInstance().getEmployeeCount();
 		}
 }
 

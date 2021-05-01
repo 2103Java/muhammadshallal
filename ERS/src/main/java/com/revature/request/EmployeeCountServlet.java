@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import com.revature.controller.EmployeeController;
 import com.revature.controller.EmployeeControllerImpl;
 
-@WebServlet("/ERS/EmployeeCountServlet")
+@WebServlet("/ERS/get/employee/count")
 public class EmployeeCountServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
