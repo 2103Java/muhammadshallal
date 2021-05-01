@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -17,7 +16,6 @@ import javax.crypto.spec.PBEKeySpec;
 
 import org.apache.log4j.Logger;
 
-import com.revature.controller.EmployeeControllerImpl;
 import com.revature.model.Employee;
 import com.revature.util.ConnectionUtil;
 

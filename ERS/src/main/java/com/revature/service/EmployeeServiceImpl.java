@@ -28,6 +28,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 			
 	//Implementations
 	@Override
+	public boolean employeeExists(String username) {
+		logger.info("CHECK EMPLOYEE EXISTS SERVICE TO " + username);
+		return EmployeeRepositoryJdbc.getInstance().selectById(username);
+	}
+	
+	@Override
 	public boolean registerEmployee(Employee employee) {
 		logger.info("REGISTRATION SERVICE TO " + employee.getEmail());
 		return EmployeeRepositoryJdbc.getInstance().insert(employee);
@@ -39,11 +45,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return EmployeeRepositoryJdbc.getInstance().delete(username);
 	}
 
-	@Override
-	public boolean employeeExists(String username) {
-		logger.info("CHECK EMPLOYEE EXISTS SERVICE TO " + username);
-		return EmployeeRepositoryJdbc.getInstance().selectById(username);
-	}
 
 	@Override
 	public int getEmployeeCount() {
