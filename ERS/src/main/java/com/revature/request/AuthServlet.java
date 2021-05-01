@@ -22,45 +22,20 @@ public class AuthServlet extends HttpServlet {
     }
 	
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// get response writer
-		PrintWriter writer = response.getWriter();
-		String htmlResposne = "";
-		
-		htmlResposne += "<!DOCTYPE html>\r\n"
-				+ "<html>\r\n"
-				+ "	<head>\r\n"
-				+ "		<meta charset=\"ISO-8859-1\">\r\n"
-				+ "		<title>Login into ERS</title>\r\n"
-				+ "	</head>\r\n"
-				+ "	<body>\r\n"
-				+ "		<form action=\"/ERS/AuthServlet\" method=\"post\" name=\"signingIn\">\r\n"
-				+ "			<br>\r\n"
-				+ "			<br>\r\n"
-				+ "			<input type=\"email\" name=\"email\" placeholder=\"account email\" required/>\r\n"
-				+ "			\r\n"
-				+ "			<br>\r\n"
-				+ "			<br>\r\n"
-				+ "			<input type=\"password\" name=\"password\" placeholder=\"account password\" required/>\r\n"
-				+ "			\r\n"
-				+ "			<br>\r\n"
-				+ "			<br>\r\n"
-				+ "			<input type=\"submit\"  value=\"login\">\r\n"
-				+ "			<button type = \"reset\" value = \"Reset\" >Reset</button>  \r\n"
-				+ "		</form>\r\n"
-				+ "	</body>\r\n"
-				+ "</html>";
-		
-		//pass your response back
-		writer.println(htmlResposne);
-	}
-	
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Object data = RequestHelper.process(request);
 
-		if (data == null)
-			response.sendError(401);
+		if (data == null) {
+			PrintWriter writer = response.getWriter();
+			String htmlResposne = "";
+			htmlResposne += "<html><body>";
+			htmlResposne += "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>";
+			htmlResposne += "<script>"
+	        		+ "swal('Oopss','Wrong Email or Password, Try Again', 'error').then(()=> {window.location.href='/ERS/html/login.html'});"
+	        		+ "</script>";
+			htmlResposne += "</body></html>";
+			writer.println(htmlResposne);
+		}
 		else {
 			Employee employee = ((Employee) data);
 			HttpSession httpSession = request.getSession();
