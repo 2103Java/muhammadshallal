@@ -12,5 +12,4 @@ public interface FinancialManagerController {
 	public String getStatusById(HttpServletRequest request);
 	public boolean setStatusById(HttpServletRequest request);
 	public List<Reimbursment> showReimbursements(HttpServletRequest request);
-	public boolean modifyStatus(HttpServletRequest request);
 }

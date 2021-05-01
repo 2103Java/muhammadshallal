@@ -95,22 +95,32 @@ public class RegisterServlet extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		String htmlRespone = "";
 		String controllerPosition = ((ClientMessage) data).getMessage();
-		if (((ClientMessage) data).getMessage().equals("REGISTRATION SUCCESSFUL"))
-			response.sendRedirect("html/login.html");
+		if (((ClientMessage) data).getMessage().equals("REGISTRATION SUCCESSFUL")){
+			htmlRespone += "<html><body>";
+			htmlRespone += "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>";
+	        htmlRespone += "<script>"
+	        		+ "swal('Success','Registered Successfully', 'success').then(()=> {window.location.href='/ERS/html/login.html'});"
+	        		+ "</script>";
+	        htmlRespone += "</body></html>";
+		}
 		else {
 			if(controllerPosition.equals("EMAIL IS TAKEN")) {
-				htmlRespone += "<html>";
-		        htmlRespone += "<h2>This email is registered, please sign in.</h2>";
-		        htmlRespone += "<a href=\"index.html\">Sign in</a>";
-		        htmlRespone += "</html>";
+				htmlRespone += "<html><body>";
+				htmlRespone += "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>";
+		        htmlRespone += "<script>"
+		        		+ "swal('Oopss..','Email is already taken', 'warning').then(()=> {window.location.href='/ERS/html/register.html'});"
+		        		+ "</script>";
+		        htmlRespone += "</body></html>";
 			} else {
-				htmlRespone += "<html>";
-		        htmlRespone += "<h2>You registration was not successful, please contact human resources.</h2>";    
-		        htmlRespone += "<a href=\"index.html\">Sign in</a>";
-		        htmlRespone += "</html>";
+				htmlRespone += "<html><body>";
+				htmlRespone += "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>";
+		        htmlRespone += "<script>"
+		        		+ "swal('Oopss..','Something Went Wrong, Contact HR', 'error').then(()=> {window.location.href='/ERS/html/login.html'});"
+		        		+ "</script>";
+		        htmlRespone += "</body></html>";
 			}
-			//pass your response back
-			writer.println(htmlRespone);
 		}
+		//pass your response back
+		writer.println(htmlRespone);
 	}
 }

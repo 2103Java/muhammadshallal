@@ -141,7 +141,7 @@ public class TestEmployeeService {
 		assertTrue(EmployeeServiceImpl.getInstance().submitReimbursment(reimbursment));
 		
 		//showPrevReimbursements
-		List<Reimbursment> retreivedReimbursmentList = EmployeeServiceImpl.getInstance().showMyPreviousReimbursments(username.toLowerCase(), "pending");
+		List<Reimbursment> retreivedReimbursmentList = EmployeeServiceImpl.getInstance().showMyPreviousReimbursments(username.toLowerCase(), "all", "pending");
 		assertEquals(retreivedReimbursmentList.size(), 1);
 		assertEquals(retreivedReimbursmentList.get(0).getEmployeeId(), username.toLowerCase());
 		assertEquals(retreivedReimbursmentList.get(0).getType(), "other");

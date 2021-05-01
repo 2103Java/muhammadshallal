@@ -8,7 +8,6 @@ import com.revature.model.Reimbursment;
 public interface FinancialManagerService {
 	
 	public List<Employee> listEmployees();
-	public List<Reimbursment> showReimbursements(String filter);
-	public boolean modifyStatus(String id, String newStatus);
+	public List<Reimbursment> showReimbursements(String filter1, String filter2);
 	
 }

@@ -160,7 +160,7 @@ public class EmployeeControllerImpl implements EmployeeController{
 			HttpSession httpSession = request.getSession(false);
 			String id = (String) httpSession.getAttribute("employeeId");
 
-			List<Reimbursment> employeeReimbursmentList = EmployeeServiceImpl.getInstance().showMyPreviousReimbursments(id, request.getParameter("filter"));
+			List<Reimbursment> employeeReimbursmentList = EmployeeServiceImpl.getInstance().showMyPreviousReimbursments(id, request.getParameter("filter1"), request.getParameter("filter2"));
 			
 			logger.info("LIST OF EMPLOYEE PREVIOUS REIMBURSEMENETS IS VIEWED");
 			return employeeReimbursmentList;

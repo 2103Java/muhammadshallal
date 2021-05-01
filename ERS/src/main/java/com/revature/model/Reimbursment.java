@@ -12,7 +12,7 @@ public class Reimbursment {
 	private String type; //lodging, travel, food, other
 	private String description;
 	private String status; //pending, approved, denied
-	private LocalDate  submissionDate;
+	private LocalDate submissionDate;
 	private Path imagePath; //path of uploaded receipt image
 	
 	public Reimbursment(String employeeId, Double amount, String type, String description) {

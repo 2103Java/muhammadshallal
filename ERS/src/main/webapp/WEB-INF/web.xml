@@ -62,7 +62,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>showEmployeeReimbursmentsServlet</servlet-name>
-    <url-pattern>/showEmployeeReimbursmentsServlet</url-pattern>
+    <url-pattern>/show/employee/reimbursments</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>submitReimbursementServlet</servlet-name>
@@ -103,13 +103,5 @@
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/logout</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>FinanceManagerApproveDeny</servlet-name>
-    <servlet-class>com.revature.request.FinanceManagerApproveDeny</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FinanceManagerApproveDeny</servlet-name>
-    <url-pattern>/FinanceManagerApproveDeny</url-pattern>
   </servlet-mapping>
 </web-app>

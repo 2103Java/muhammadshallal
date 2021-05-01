@@ -41,26 +41,14 @@ public class FinancialManagerControllerImpl implements FinancialManagerControlle
 	@Override
 	public List<Reimbursment> showReimbursements(HttpServletRequest request) {
 		List<Reimbursment> reimbursmentList = null;
-		if(request.getParameter("filter") == null) {
-			reimbursmentList = FinancialManagerServiceImpl.getInstance().showReimbursements((String) request.getAttribute("filter"));
-		} else {
-			reimbursmentList = FinancialManagerServiceImpl.getInstance().showReimbursements(request.getParameter("filter"));
-		}
+		if(request.getParameter("filter1") == null && request.getParameter("filter2") == null)
+			reimbursmentList = FinancialManagerServiceImpl.getInstance().showReimbursements("all", "all");
+		else reimbursmentList = FinancialManagerServiceImpl.getInstance().showReimbursements(request.getParameter("filter1"), request.getParameter("filter2"));
 		logger.info("LIST OF REIMBURSEMENETS IS VIEWED BY A FINANCE MANAGER");
 		return reimbursmentList;
 		
 	}
 
-	@Override
-	public boolean modifyStatus(HttpServletRequest request) {
-		boolean modifyResult = FinancialManagerServiceImpl.getInstance().modifyStatus(request.getParameter("ticketId"), request.getParameter("selection"));
-		if(modifyResult == true) {
-			logger.info("FINANCIAL MANAGER UPDATED REIMBURSEMENT: " + request.getParameter("ticketId") + " to: " + request.getParameter("selection"));
-		} else {
-			logger.debug("FINANCIAL MANAGER COULD NOT UPDATE REIMBURSEMENT: " + request.getParameter("ticketId") + " to: " + request.getParameter("selection"));
-		}
-		return modifyResult;
-	}
 	
 	@Override
 	public int getClaimCount() {

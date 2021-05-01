@@ -25,14 +25,12 @@ public class RequestHelper {
 				return EmployeeControllerImpl.getInstance().logout(request);
 			case "/ERS/submitReimbursementServlet":
 				return EmployeeControllerImpl.getInstance().submitReimbursement(request);
-			case "/ERS/showEmployeeReimbursmentsServlet":
+			case "/ERS/show/employee/reimbursments":
 				return EmployeeControllerImpl.getInstance().showEmployeeReimbursements(request);
 			case "/ERS/get/empclaim/count":
 				return EmployeeControllerImpl.getInstance().showEmployeeReimbursements(request).size();
 			case "/ERS/all/claim":
 				return FinancialManagerControllerImpl.getInstance().showReimbursements(request);
-			case "/ERS/FinanceManagerApproveDeny":
-				return FinancialManagerControllerImpl.getInstance().modifyStatus(request);
 			case "unregisterEmployee":
 				return EmployeeControllerImpl.getInstance().unregister(request);
 			case "/ERS/claim/status":

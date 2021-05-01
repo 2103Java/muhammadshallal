@@ -1,5 +1,6 @@
 package com.revature.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -66,15 +67,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<Reimbursment> showMyPreviousReimbursments(String username, String filter) {
-		logger.info("SHOW PREVIOUS AND " + filter.toUpperCase() + " REIMBURSEMENETS SERVICE TO " + username);
-		if(filter.equals("all")) {
-			return ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeId(username);
-		} else if(filter.equals("pending") || filter.equals("approved") || filter.equals("denied")){
-			return ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeStatus(username, filter);
-		} else {
-			return ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeType(username, filter);
-		}
+	public List<Reimbursment> showMyPreviousReimbursments(String username, String filter1, String filter2) {
+		logger.info("SHOW PREVIOUS AND " + filter1.toUpperCase() + " AND " + filter2.toUpperCase() + " REIMBURSEMENETS SERVICE TO " + username);
+		List<Reimbursment> reimbursments = new ArrayList<>();
+		if(filter1.equals("all") && filter2.equals("all"))
+			reimbursments = ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeId(username);
+		else reimbursments = ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeTypeAndStatus(username, filter1, filter2);
+		return reimbursments;
 	}
 }
 
