@@ -80,17 +80,17 @@ public class EmployeeControllerImpl implements EmployeeController{
 			}
 		}
 
-		@Override
-		public ClientMessage unregister(HttpServletRequest request) {
-			
-			if (EmployeeServiceImpl.getInstance().unregisterEmployee(request.getParameter("email")) == true){
-				logger.info("UNREGISTRATION SUCCESSFUL BY " + request.getParameter("email"));
-				return new ClientMessage("UNREGISTRATION SUCCESSFUL");
-			} else {
-				logger.info("UNREGISTRATION UNSUCCESSFUL BY " + request.getParameter("email"));
-				return new ClientMessage("SOMETHING WENT WRONG DURING UNREGISTRATION");
-			}
-		}
+//		@Override
+//		public ClientMessage unregister(HttpServletRequest request) {
+//			
+//			if (EmployeeServiceImpl.getInstance().unregisterEmployee(request.getParameter("email")) == true){
+//				logger.info("UNREGISTRATION SUCCESSFUL BY " + request.getParameter("email"));
+//				return new ClientMessage("UNREGISTRATION SUCCESSFUL");
+//			} else {
+//				logger.info("UNREGISTRATION UNSUCCESSFUL BY " + request.getParameter("email"));
+//				return new ClientMessage("SOMETHING WENT WRONG DURING UNREGISTRATION");
+//			}
+//		}
 
 		@Override
 		public boolean isRegistered(String email) {
@@ -166,10 +166,6 @@ public class EmployeeControllerImpl implements EmployeeController{
 			return employeeReimbursmentList;
 		}
 
-		public int getEmployeeCount() {
-			logger.info("GET EMPLOYEE COUNT");
-			return EmployeeServiceImpl.getInstance().getEmployeeCount();
-		}
 }
 
 

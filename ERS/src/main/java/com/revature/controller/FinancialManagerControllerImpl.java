@@ -18,9 +18,12 @@ public class FinancialManagerControllerImpl implements FinancialManagerControlle
 	private static FinancialManagerController financialManagerController;
 	
 	private FinancialManagerControllerImpl() {}
+	private static List<String> financeManagers = new ArrayList<String>();
 	
 	public static FinancialManagerController getInstance() {
 		if(financialManagerController == null) {
+			financeManagers.add("hshallal@gmail.com");
+			financeManagers.add("abdul.moeed.ak@gmail.com");
 			financialManagerController = new FinancialManagerControllerImpl();
 		}
 		
@@ -34,10 +37,28 @@ public class FinancialManagerControllerImpl implements FinancialManagerControlle
 	@Override
 	public int getEmployeeCount() {
 		List<Employee> employeeList = FinancialManagerServiceImpl.getInstance().listEmployees();
-		logger.info("GET EMPLOYEE COUNT");
+		logger.info("GET EMPLOYEE COUNT BY A FINANCE MANAGER");
 		return employeeList.size();
 	}
 
+	@Override
+	public int getClaimCount() {
+		logger.info("GET CLAIM COUNT BY A FINANCE MANAGER");
+		return FinancialManagerServiceImpl.getInstance().getClaimCount();
+	}
+
+	@Override
+	public String getStatusById(HttpServletRequest request) {
+		logger.info("GET STATUS OF A CLAIM BY ID BY A FINANCE MANAGER");
+		return FinancialManagerServiceImpl.getInstance().getStatusById(request.getParameter("id"));
+	}
+
+	@Override
+	public boolean setStatusById(HttpServletRequest request) {
+		logger.info("SET STATUS OF A CLAIM BY ID BY A FINANCE MANAGER");
+		return FinancialManagerServiceImpl.getInstance().setStatusById(request.getParameter("id"), request.getParameter("status"));
+	}
+	
 	@Override
 	public List<Reimbursment> showReimbursements(HttpServletRequest request) {
 		List<Reimbursment> reimbursmentList = null;
@@ -47,25 +68,6 @@ public class FinancialManagerControllerImpl implements FinancialManagerControlle
 		logger.info("LIST OF REIMBURSEMENETS IS VIEWED BY A FINANCE MANAGER");
 		return reimbursmentList;
 		
-	}
-
-	
-	@Override
-	public int getClaimCount() {
-		// TODO Auto-generated method stub
-		return ReimbursmentRepositoryJdbc.getInstance().getClaim().size();
-	}
-
-	@Override
-	public String getStatusById(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return ReimbursmentRepositoryJdbc.getInstance().getStatusById(request.getParameter("id"));
-	}
-
-	@Override
-	public boolean setStatusById(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return ReimbursmentRepositoryJdbc.getInstance().setStatusById(request.getParameter("id"), request.getParameter("status"));
 	}
 	
 }

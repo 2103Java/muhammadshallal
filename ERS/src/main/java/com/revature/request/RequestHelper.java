@@ -18,7 +18,7 @@ public class RequestHelper {
 			case "/ERS/register":
 				return EmployeeControllerImpl.getInstance().register(request);
 			case "/ERS/get/employee/count":
-				return EmployeeControllerImpl.getInstance().getEmployeeCount();
+				return FinancialManagerControllerImpl.getInstance().getEmployeeCount();
 			case "/ERS/get/claim/count":
 				return FinancialManagerControllerImpl.getInstance().getClaimCount();
 			case "/ERS/logout":
@@ -31,8 +31,8 @@ public class RequestHelper {
 				return EmployeeControllerImpl.getInstance().showEmployeeReimbursements(request).size();
 			case "/ERS/all/claim":
 				return FinancialManagerControllerImpl.getInstance().showReimbursements(request);
-			case "unregisterEmployee":
-				return EmployeeControllerImpl.getInstance().unregister(request);
+//			case "unregisterEmployee":
+//				return EmployeeControllerImpl.getInstance().unregister(request);
 			case "/ERS/claim/status":
 				return FinancialManagerControllerImpl.getInstance().getStatusById(request);
 			case "/ERS/set/status":

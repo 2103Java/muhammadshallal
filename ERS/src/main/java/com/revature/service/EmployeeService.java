@@ -6,12 +6,10 @@ import com.revature.model.*;
 
 public interface EmployeeService {
 	
+	
+	public boolean employeeExists(String username);	
 	public boolean registerEmployee(Employee employee);
-	public boolean unregisterEmployee(String username);
-	
-	public boolean employeeExists(String username);
-	public int getEmployeeCount();
-	
+	//public boolean unregisterEmployee(String username);
 	
 	public Employee login(String username, String password);
 	

@@ -40,18 +40,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return EmployeeRepositoryJdbc.getInstance().insert(employee);
 	}
 
-	@Override
-	public boolean unregisterEmployee(String username) {
-		logger.info("UNREGISTRATION SERVICE TO " + username);
-		return EmployeeRepositoryJdbc.getInstance().delete(username);
-	}
-
-
-	@Override
-	public int getEmployeeCount() {
-		logger.info("LIST ALL EMPLOYEES SERVICE");
-		return EmployeeRepositoryJdbc.getInstance().selectAllEmployees().size();
-	}
+//	@Override
+//	public boolean unregisterEmployee(String username) {
+//		logger.info("UNREGISTRATION SERVICE TO " + username);
+//		return EmployeeRepositoryJdbc.getInstance().delete(username);
+//	}
 	
 	@Override
 	public Employee login(String username, String password) {
@@ -70,6 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Reimbursment> showMyPreviousReimbursments(String username, String filter1, String filter2) {
 		logger.info("SHOW PREVIOUS AND " + filter1.toUpperCase() + " AND " + filter2.toUpperCase() + " REIMBURSEMENETS SERVICE TO " + username);
 		List<Reimbursment> reimbursments = new ArrayList<>();
+		
 		if(filter1.equals("all") && filter2.equals("all"))
 			reimbursments = ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeId(username);
 		else reimbursments = ReimbursmentRepositoryJdbc.getInstance().selectByEmployeeTypeAndStatus(username, filter1, filter2);

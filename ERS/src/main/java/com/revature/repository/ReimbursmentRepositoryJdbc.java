@@ -207,11 +207,11 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 						  result.getString("description"));
 				reimbursmentList.add(reimbursment);
 				}
-			logger.info("REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
+			logger.info("REIMBURSEMENTS OF TYPE: " + type.toUpperCase() +  " AND OF STATUS " + status.toUpperCase() +  " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", WERE FOUND IN RDS");
 			return reimbursmentList;
 				
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.debug("ISSUES FINDING REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", IN RDS");
+			logger.debug("ISSUES FINDING REIMBURSEMENTS OF TYPE: " + type.toUpperCase() + " AND OF STATUS " + status.toUpperCase() +  " FOR EMPLOYEE WITH USERNAME: " + employeeId + ", IN RDS");
 			e.printStackTrace();
 			return null;
 		} 
@@ -357,29 +357,37 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 			statement.setString(1, id);
 			ResultSet result = statement.executeQuery();
 			result.next();
+			
+			logger.info("A REIMBURSEMENT STATUS HAS BEEN OBTAINED FROM THE RDS");
 			return result.getString("status");
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with getting reimbursment.");
+			logger.debug("ISSUES WITH OBTAINING THE STATUS OF A REIMBURSEMENT");
 			return "Claim Not Found";
 		}
 	}
 
 	@Override
 	public boolean setStatusById(String id, String status) {
-		// TODO Auto-generated method stub
 		Connection connection = null;
-		try {
-			connection = ConnectionUtil.getConnection();
-			String command = "update reimbursments set status = ? WHERE id = ?";
-			PreparedStatement statement = connection.prepareStatement(command);
-			statement.setString(1, status);
-			statement.setString(2, id);
-			statement.executeUpdate();
-			return true;
-			
-		}catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Issues with getting reimbursment.");
+		if(!(status.equals("denied") || status.equals("approved"))) {
+			//We can't change status into pending, fin managers are only allowed
+			//to change a status to wither denied or approved
 			return false;
+		} else {
+			try {
+				connection = ConnectionUtil.getConnection();
+				String command = "update reimbursments set status = ? WHERE id = ?";
+				PreparedStatement statement = connection.prepareStatement(command);
+				statement.setString(1, status);
+				statement.setString(2, id);
+				statement.executeUpdate();
+				logger.info("A REIMBURSEMENT STATUS HAS BEEN MODIFIED IN THE RDS");
+				return true;
+				
+			}catch (ClassNotFoundException | SQLException e) {
+				logger.debug("ISSUES WITH CHANGING THE STATUS OF A REIMBURSEMENT");
+				return false;
+			}
 		}
 	}
 	

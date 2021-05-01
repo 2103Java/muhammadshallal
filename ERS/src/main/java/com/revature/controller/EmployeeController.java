@@ -15,10 +15,10 @@ public interface EmployeeController {
 	public Employee login(HttpServletRequest request);
 	public ClientMessage logout(HttpServletRequest request);
 	public ClientMessage register(HttpServletRequest request);
-	public ClientMessage unregister(HttpServletRequest request);
+	//public ClientMessage unregister(HttpServletRequest request);
 	
 	public ClientMessage submitReimbursement(HttpServletRequest request);
 	public List<Reimbursment> showEmployeeReimbursements(HttpServletRequest request);
-	public int getEmployeeCount();
+	
 	
 }

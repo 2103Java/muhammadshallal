@@ -1,23 +1,21 @@
-package UnitTests;
-
-import org.junit.Test;
+package com.revature.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import com.revature.model.Employee;
 import com.revature.model.Reimbursment;
-import com.revature.service.EmployeeServiceImpl;
 
-public class TestEmployeeService {
+class EmployeeServiceTest {
 
-	private static int curEmployeeCountBeforeTesting = EmployeeServiceImpl.getInstance().getEmployeeCount();
-	
 	//Adapted: https://www.baeldung.com/java-random-string
 	public static String generateAlphaNumericString() {
 	    int leftLimit = 48; // numeral '0'
@@ -30,36 +28,23 @@ public class TestEmployeeService {
 	      .limit(targetStringLength)
 	      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
 	      .toString();
-
-	    System.out.println(generatedString);
+	    
 	    return generatedString;
 	}
 		
 	@Test
-	public void testEmployeeExists() {
-		//boolean employeeExists(String username)
-		
+	void testEmployeeExists() {
 		//Test for an existing user
 		assertTrue(EmployeeServiceImpl.getInstance().employeeExists("hshallal@icloud.com"));
 		
 		//Test for a nonexisting user
 		String username = generateAlphaNumericString() + "@trial.com";
 		assertFalse(EmployeeServiceImpl.getInstance().employeeExists(username.toLowerCase()));
-	}
-	
-	//How to test this
-	@Test
-	public void testGetEmployeeCount() {
-		// int getEmployeeCount()
-		System.out.println(curEmployeeCountBeforeTesting);
-		// Test whether the added employee above was counted
-		assertEquals(EmployeeServiceImpl.getInstance().getEmployeeCount(), curEmployeeCountBeforeTesting);
-	}
-	
-	@Test
-	public void testRegisterEmployee() {
-		//boolean registerEmployee(Employee employee);
 
+	}
+
+	@Test
+	void testRegisterEmployee() {
 		//Register a regular employee
 		String username = generateAlphaNumericString()+"@trial.com";
 		String password = generateAlphaNumericString();
@@ -70,14 +55,11 @@ public class TestEmployeeService {
 		//Try to Register an employee with an email that already exists
 		employee.setEmail("hshallal@icloud.com");
 		assertFalse(EmployeeServiceImpl.getInstance().registerEmployee(employee));
+
 	}
-	
-	
-	
+
 	@Test
-	public void testLogin() {
-		// Employee login(String username, String password)
-		
+	void testLogin() {
 		//test login of an account that doesn't exist
 		String username = generateAlphaNumericString()+"@trial.com";
 		String password = generateAlphaNumericString();
@@ -96,13 +78,10 @@ public class TestEmployeeService {
 		assertEquals(registeredEmployee.getFirstName(), employee.getFirstName());
 		assertEquals(registeredEmployee.getLastName(), employee.getLastName());
 		assertEquals(registeredEmployee.getIsManager(), employee.getIsManager());
-	
 	}
-	
-	@Test 
-	public void testSubmitReimbursment() {
-		// boolean submitReimbursment(Reimbursment reimbursment)
 
+	@Test
+	void testSubmitReimbursment() {
 		//Test the submission of a reimbursement by an existing employee
 		Reimbursment reimbursment = new Reimbursment("hshallal@icloud.com", 120.0, "travel", "unittests");
 		assertTrue(EmployeeServiceImpl.getInstance().submitReimbursment(reimbursment));
@@ -111,11 +90,10 @@ public class TestEmployeeService {
 		String username = generateAlphaNumericString()+"@trial.com";
 		reimbursment = new Reimbursment(username.toLowerCase(), 120.0, "travel", "unittests");
 		assertFalse(EmployeeServiceImpl.getInstance().submitReimbursment(reimbursment));
-		
 	}
-	
-	@Test public void testShowMyPreviousReimbursments() {
-		//List<Reimbursment> showMyPreviousReimbursments(String username, String filter)
+
+	@Test
+	void testShowMyPreviousReimbursments() {
 		//generate a random user, register the user, submit a reimbursement for the user, get a list
 		//of the tickets of this user, assert the size of this list is 1 and that that amount, type,
 		//description matches the submitted reimbursement
@@ -146,5 +124,7 @@ public class TestEmployeeService {
 		assertEquals(retreivedReimbursmentList.get(0).getEmployeeId(), username.toLowerCase());
 		assertEquals(retreivedReimbursmentList.get(0).getType(), "other");
 		assertEquals(retreivedReimbursmentList.get(0).getDescription(), "unittestshow");	
+
 	}
+
 }
