@@ -63,7 +63,7 @@
             	swal("Success", "Claim "+status, "success").then(() => {
                     document.getElementById("statusSelect").value = 'all';
                     document.getElementById("typeSelect").value = 'all';
-            		getAllClaims('all');
+            		getAllClaims('all', 'all');
             	})
                 
             }

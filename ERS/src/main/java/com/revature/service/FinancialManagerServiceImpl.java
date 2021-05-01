@@ -42,14 +42,4 @@ public class FinancialManagerServiceImpl implements FinancialManagerService {
 		else return ReimbursmentRepositoryJdbc.getInstance().selectByTypeAndStatus(filter1, filter2);
 	}
 
-	@Override
-	public boolean modifyStatus(String id, String newStatus) {
-		boolean updateResult = ReimbursmentRepositoryJdbc.getInstance().updateStatus(id, newStatus);
-		if(updateResult == true) {
-			logger.info("FINANCIAL MANAGER UPDATED REIMBURSEMENT: " + id + " to: " + newStatus);
-		} else {
-			logger.debug("FINANCIAL MANAGER COULD NOT UPDATE REIMBURSEMENT: " + id + " to: " + newStatus);
-		}
-		return updateResult;
-	}
 }

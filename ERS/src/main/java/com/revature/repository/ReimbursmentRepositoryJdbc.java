@@ -180,16 +180,19 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 	
 	
 	@Override
-	public List<Reimbursment> selectByEmployeeType(String employeeId, String type) {
+	public List<Reimbursment> selectByEmployeeTypeAndStatus(String employeeId, String type, String status) {
 		Connection connection = null;
 		try {
 			connection = ConnectionUtil.getConnection();
-					
-			int statementIndex = 0;
-			String command = "SELECT * FROM reimbursments WHERE employeeId=? AND typeof=?";
+			String command = "SELECT * FROM reimbursments WHERE employeeId=? AND typeof like ? AND status like ?";
 			PreparedStatement statement = connection.prepareStatement(command);
-			statement.setString(++statementIndex, employeeId.toLowerCase());
-			statement.setString(++statementIndex, type);
+			statement.setString(1, employeeId.toLowerCase());
+			if (type.equals("all"))
+				statement.setString(2, "%%");
+			else statement.setString(2, type);
+			if (status.equals("all"))
+				statement.setString(3, "%%");
+			else statement.setString(3, status);
 			ResultSet result = statement.executeQuery();
 
 			List<Reimbursment> reimbursmentList = new ArrayList<>();
@@ -314,36 +317,6 @@ public class ReimbursmentRepositoryJdbc implements ReimbursmentRepository {
 		
 	}
 
-	@Override
-	public boolean updateStatus(String id, String newStatus) {
-		Connection connection = null;
-		try {
-			connection = ConnectionUtil.getConnection();
-			int statementIndex = 0;
-			String command = "UPDATE reimbursments SET status=? WHERE id=?";
-			
-			PreparedStatement statement;
-			statement = connection.prepareStatement(command);
-			statement.setString(++statementIndex, newStatus);
-			statement.setString(++statementIndex, id);	
-			
-			if(statement.executeUpdate() > 0) {
-				logger.info("THE STATUS OF A REIMBURSEMENT IS UPDATED IN THE RDS");
-				return true;
-			} else {
-				logger.debug("ISSUES WITH UPDATING THE STATUS OF A REIMBURSEMENT NON EXCEPTION");
-				return false;
-			}
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			logger.debug("ISSUES WITH UPDATING THE STATUS OF A REIMBURSEMENT");
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	
-	
 	@Override
 	public Map<Reimbursment, String> getClaim() {
 		Connection connection = null;
