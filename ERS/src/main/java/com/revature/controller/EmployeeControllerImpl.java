@@ -80,17 +80,6 @@ public class EmployeeControllerImpl implements EmployeeController{
 			}
 		}
 
-//		@Override
-//		public ClientMessage unregister(HttpServletRequest request) {
-//			
-//			if (EmployeeServiceImpl.getInstance().unregisterEmployee(request.getParameter("email")) == true){
-//				logger.info("UNREGISTRATION SUCCESSFUL BY " + request.getParameter("email"));
-//				return new ClientMessage("UNREGISTRATION SUCCESSFUL");
-//			} else {
-//				logger.info("UNREGISTRATION UNSUCCESSFUL BY " + request.getParameter("email"));
-//				return new ClientMessage("SOMETHING WENT WRONG DURING UNREGISTRATION");
-//			}
-//		}
 
 		@Override
 		public boolean isRegistered(String email) {
@@ -119,6 +108,10 @@ public class EmployeeControllerImpl implements EmployeeController{
 			HttpSession httpSession = request.getSession(false);
 			String id = (String) httpSession.getAttribute("employeeId");	
 			
+			if(Double.parseDouble(request.getParameter("Amount")) < 0) {
+				logger.info("REIMBURSEMENET SUBMISSION UNSUCCESSFUL NEGATIVE AMOUNT.");
+				return new ClientMessage("REIMBURSEMENET SUBMISSION UNSUCCESSFUL NEGATIVE AMOUNT");
+			}
 			Reimbursment reimbursment =  new Reimbursment(id, 
                     Double.parseDouble(request.getParameter("Amount")), 
                     request.getParameter("category"),

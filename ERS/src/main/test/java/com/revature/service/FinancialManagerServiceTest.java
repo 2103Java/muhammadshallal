@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.revature.model.Reimbursment;
 
 class FinancialManagerServiceTest {
 
@@ -12,7 +11,7 @@ class FinancialManagerServiceTest {
 	void testGetClaimCount() {
 		// You have to set uo the curClaimCount manually given the current number of claims
 		// I don't think this is the right way to do it though
-		int curClaimCount = 20;
+		int curClaimCount = 6;
 		assertEquals(FinancialManagerServiceImpl.getInstance().getClaimCount(), curClaimCount);
 	}
 
@@ -20,9 +19,9 @@ class FinancialManagerServiceTest {
 	void testGetStatusById() {
 		//manually get ids of different reimbuirsements wth different status
 		
-		String pendingId = "af1e4e2a-982d-4300-9b0e-613279735f89";
-		String approvedId = "4daa7bb4-6b0a-4e49-bd85-1645f6ca9e6b";
-		String deniedId = "2876d8b7-e3a1-472f-966f-c5438bf704b3";
+		String pendingId = "d1e5425b-e0ce-4519-8428-03eadf7189ae";
+		String approvedId = "edcbd4c6-91f6-49b4-8e98-1211f03b2538";
+		String deniedId = "3c878d78-2b36-4b50-a4ba-2bc0e5acdb5f";
 		
 		assertEquals(FinancialManagerServiceImpl.getInstance().getStatusById(pendingId), "pending");
 		assertEquals(FinancialManagerServiceImpl.getInstance().getStatusById(approvedId), "approved");
@@ -38,15 +37,15 @@ class FinancialManagerServiceTest {
 		//Front end js doesn't allow changing the status of approved or denied claims
 		//Backend doesn't allow changing the status to anything other than either approved or denied, let't test this
 		//we can only set status of a pending reimbursement to be approved or denied
-		String pendingId1 = "7f8f5200-564b-462f-a154-c30a7d879b29";
-		String pendingId2 = "07e7b2c9-e7ed-4ecc-9f7e-3acbc14d6c1c";
+		String pendingId1 = "f0ddb1e0-4865-4bfe-a831-b7cfe8abcbd5";
+		String pendingId2 = "7ed6269a-b5b7-4b2e-b8c2-d4c3fc983624";
 		assertTrue(FinancialManagerServiceImpl.getInstance().setStatusById(pendingId1, "approved"));
 		assertFalse(FinancialManagerServiceImpl.getInstance().setStatusById(pendingId2, "anything"));
 	}
 
 	@Test
 	void testListEmployees() {
-		int curEmployeeSize = 23;
+		int curEmployeeSize = 7;
 		assertEquals(FinancialManagerServiceImpl.getInstance().listEmployees().size(), curEmployeeSize);
 		assertNotEquals(FinancialManagerServiceImpl.getInstance().listEmployees().size(), curEmployeeSize  + 1);
 	}

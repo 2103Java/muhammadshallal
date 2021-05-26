@@ -58,8 +58,10 @@ public class showReimbursmentsServlet extends HttpServlet {
 		// get response writer
 		PrintWriter writer = response.getWriter();
 		String htmlResponse = "";
+		
 		htmlResponse += "<thead class=\"text-primary\">";
 		htmlResponse += "<tr>";
+		htmlResponse += "<th>ID</th>";
 		htmlResponse += "<th>Employee Email</th>";
 		htmlResponse += "<th>Amount</th>";
 		htmlResponse += "<th>Type</th>";
@@ -73,6 +75,9 @@ public class showReimbursmentsServlet extends HttpServlet {
 		for(int i = 0; i < previousReimbursements.size(); i++) {
 			htmlResponse += "<tr>";
 			htmlResponse += "<td>";
+			htmlResponse += previousReimbursements.get(i).getId();
+			htmlResponse += "</td>";
+			htmlResponse += "<td>";
 			htmlResponse += previousReimbursements.get(i).getEmployeeId();
 			htmlResponse += "</td>";
 			htmlResponse += "<td>";
@@ -81,21 +86,9 @@ public class showReimbursmentsServlet extends HttpServlet {
 			htmlResponse += "<td>";
 			htmlResponse += previousReimbursements.get(i).getType();
 			htmlResponse += "</td>";
-			if(previousReimbursements.get(i).getStatus().equals("pending")) {
-				htmlResponse += "<td>";
-				htmlResponse += previousReimbursements.get(i).getStatus();
-				htmlResponse += "<input type=\"hidden\" id=\"ticketId\" name=\"ticketId\" value=";
-				htmlResponse += previousReimbursements.get(i).getId();
-				htmlResponse += ">";
-				htmlResponse += "<button onclick=\"copyId()\">Copy id</button>";
-				
-				htmlResponse += "</form>";
-				htmlResponse += "</td>";
-			} else {
-				htmlResponse += "<td>";
-				htmlResponse += previousReimbursements.get(i).getStatus();
-				htmlResponse += "</td>";
-			}
+			htmlResponse += "<td>";
+			htmlResponse += previousReimbursements.get(i).getStatus();
+			htmlResponse += "</td>";
 			htmlResponse += "<td>";
 			htmlResponse += previousReimbursements.get(i).getSubmissionDate();
 			htmlResponse += "</td>";
@@ -105,7 +98,7 @@ public class showReimbursmentsServlet extends HttpServlet {
 			htmlResponse += "</tr>";
 		}
 		htmlResponse += "</tbody>";
-
+		
 		//pass your response back
 		writer.println(htmlResponse);
 	}

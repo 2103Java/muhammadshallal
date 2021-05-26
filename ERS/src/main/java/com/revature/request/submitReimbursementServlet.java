@@ -47,6 +47,13 @@ public class submitReimbursementServlet extends HttpServlet {
 	        		+ "swal('Oopss..','Something Went Wrong', 'error').then(()=> {window.location.href='/ERS/html/submitReimbursement.html'});"
 	        		+ "</script>";      
 	        htmlRespone += "</body></html>";
+		} else if (((ClientMessage) data).getMessage().equals("REIMBURSEMENET SUBMISSION UNSUCCESSFUL NEGATIVE AMOUNT")){
+			htmlRespone += "<html><body>";
+			htmlRespone += "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>";
+	        htmlRespone += "<script>"
+	        		+ "swal('Oopss..','Please enter a positive amount!', 'error').then(()=> {window.location.href='/ERS/html/submitReimbursement.html'});"
+	        		+ "</script>";      
+	        htmlRespone += "</body></html>";
 		}
 		
 		//pass your response back
