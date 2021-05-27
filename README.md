@@ -1,4 +1,4 @@
-# PROJECT NAME
+# Employee Reimbursement System (ERS)
 
 ## Project Description
 
